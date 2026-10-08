@@ -9,7 +9,7 @@
     :root { --d2-gold: #e6b85c; --bg: #0b0d10; --card: #14161a; --text: #e0e0e0; --dim: #a0a0a0; --border: #2a2e35; --danger: #e0555a; --danger-bg: #2a1d1f; }
     * { box-sizing: border-box; }
     body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 168px 20px 60px 160px; margin:0; display: flex; flex-direction: column; align-items: center; }
-    .sticky-header { position: fixed; top: 0; left: 0; width: 100%; padding: 14px 0 12px; background: rgba(11, 13, 16, 0.98); border-bottom: 2px solid var(--d2-gold); display: flex; flex-direction: column; align-items: center; z-index: 1000; gap: 8px; }
+    .sticky-header { position: fixed; top: 0; left: 0; width: 100%; padding: 8px 16px; background: rgba(11, 13, 16, 0.98); border-bottom: 2px solid var(--d2-gold); display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 12px; row-gap: 6px; z-index: 1000; }
     #searchBar { width: 460px; max-width: 90vw; padding: 12px 14px; background: #000; border: 1px solid var(--d2-gold); color: white; font-size: 14px; border-radius: 4px; }
     .header-row { display:flex; align-items:center; gap: 16px; flex-wrap: wrap; justify-content:center; }
     #progressText { font-weight:700; color:var(--d2-gold); font-size: 14px; }
@@ -146,9 +146,26 @@
     .wishlist-delete-btn { background: none; border: none; color: var(--dim); cursor: pointer; font-size: 14px; padding: 4px 8px; }
     .wishlist-delete-btn:hover { color: var(--danger); }
 
-    .brand { position: absolute; left: 16px; top: 10px; display: flex; align-items: center; gap: 10px; color: var(--d2-gold); font-weight: 700; font-size: 15px; letter-spacing: 0.3px; white-space: nowrap; }
+    .brand { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; color: var(--d2-gold); font-weight: 700; font-size: 15px; letter-spacing: 0.3px; white-space: nowrap; }
     .brand img { height: 56px; width: auto; display: block; }
-    @media (max-width: 900px) { .brand span { display: none; } }
+
+    /* --- Header arrangement: one flowing bar that wraps on narrower screens --- */
+    .sticky-header .header-row { display: contents; }
+    .sticky-header .header-row + .header-row { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; order: 6; margin-left: auto; }
+    .sticky-header [data-mv="brand"] { order: 0; }
+    .sticky-header [data-mv="progress"] { order: 1; white-space: nowrap; }
+    .sticky-header #searchBar { order: 2; flex: 1 1 260px; width: auto; max-width: 460px; min-width: 200px; }
+    .sticky-header [data-mv="reset-class"] { order: 3; }
+    .sticky-header [data-mv="reload-icons"] { order: 4; }
+    .sticky-header [data-mv="autofill-icons"] { order: 5; }
+    .sticky-header [data-mv="sync-label"] { order: 6; white-space: nowrap; }
+    .sticky-header [data-mv="sync-code"] { order: 7; }
+    .sticky-header [data-mv="sync-copy"] { order: 8; }
+    .sticky-header [data-mv="sync-input"] { order: 9; }
+    .sticky-header [data-mv="sync-load"] { order: 10; }
+    .sticky-header #sync-status { position: absolute; top: 100%; right: 16px; margin-top: 2px; font-size: 11px; white-space: nowrap; pointer-events: none; }
+    .sticky-header .pill { white-space: nowrap; }
+    .sticky-header .load-banner { order: 20; flex: 0 0 100%; width: 100%; max-width: none; padding: 0 max(0px, calc(50% - 230px)); }
 
     /* --- Layout editor --- */
     #layout-panel { position: fixed; right: 16px; bottom: 16px; z-index: 3000; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 90vw; padding: 8px; background: rgba(11,13,16,0.95); border: 1px solid var(--border); border-radius: 6px; }
@@ -236,7 +253,7 @@
 <script>
 (function () {
   const h = document.querySelector('.sticky-header'), m = document.querySelector('.side-menu');
-  function sync() { m.style.top = h.offsetHeight + 'px'; }
+  function sync() { m.style.top = h.offsetHeight + 'px'; document.body.style.paddingTop = (h.offsetHeight + 14) + 'px'; }
   sync(); window.addEventListener('resize', sync); window.addEventListener('load', sync);
   if (window.ResizeObserver) new ResizeObserver(sync).observe(h);
 })();
@@ -1943,12 +1960,17 @@
 
 <script>
 (function () {
-  const KEY = 'destiny2-layout-v1';
+  const KEY = 'destiny2-layout-v2';
   const GRID = 5;
   const MIN = { header: { w: 480, h: 70 }, sidebar: { w: 100, h: 60 } };
   const DEF_PAD_TOP = 168, DEF_PAD_LEFT = 160;
-  let L = {}, editing = false, act = null;
-  try { const raw = JSON.parse(localStorage.getItem(KEY) || '{}'); if (raw && typeof raw === 'object') L = raw; } catch (e) { L = {}; }
+  // The default arrangement is the flowing header defined in the CSS, so there are no built-in offsets.
+  const DEFAULT_LAYOUT = {};
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const defaultLayout = () => clone(DEFAULT_LAYOUT);
+  let L = null, editing = false, act = null;
+  try { const raw = JSON.parse(localStorage.getItem(KEY) || '{}'); if (raw && typeof raw === 'object' && Object.keys(raw).length) L = raw; } catch (e) { L = null; }
+  if (L === null) L = defaultLayout();
 
   const nodes = () => document.querySelectorAll('[data-mv],[data-mvblock]');
   const idOf = (el) => el.dataset.mv || el.dataset.mvblock;
@@ -1963,10 +1985,8 @@
     }
   }
   function padding() {
-    const h = L.header, sd = L.sidebar;
-    const top = Math.max(DEF_PAD_TOP, h && num(h.h) ? h.h + 8 : 0);
+    const sd = L.sidebar;
     const left = Math.max(DEF_PAD_LEFT, sd && num(sd.w) ? sd.w + 20 : 0);
-    document.body.style.paddingTop = top > DEF_PAD_TOP ? top + 'px' : '';
     document.body.style.paddingLeft = left > DEF_PAD_LEFT ? left + 'px' : '';
   }
   function paintAll() { nodes().forEach(paint); padding(); }
@@ -2032,11 +2052,11 @@
 
   document.getElementById('layout-reset').addEventListener('click', () => {
     if (!confirm('Reset the layout to the default positions and sizes?')) return;
-    L = {}; paintAll(); save();
+    L = defaultLayout(); paintAll(); save();
   });
 
   document.getElementById('layout-export').addEventListener('click', () => {
-    const out = { version: 2, positions: L };
+    const out = { version: 3, positions: L };
     const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'd2-checklist-layout.json';
@@ -2054,6 +2074,7 @@
         const parsed = JSON.parse(rd.result);
         const pos = parsed && parsed.positions;
         if (!pos || typeof pos !== 'object') throw new Error('bad');
+        if (!(parsed.version >= 3)) { alert('That layout file is from an older version of the page and no longer fits. Export a new one.'); fileInput.value = ''; return; }
         const known = new Set(Array.from(nodes()).map(idOf)), next = {};
         Object.keys(pos).forEach((k) => {
           if (!known.has(k) || !valid(pos[k])) return;
