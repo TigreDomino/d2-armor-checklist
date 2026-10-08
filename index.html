@@ -7,12 +7,13 @@
 <style>
     :root { --d2-gold: #e6b85c; --bg: #0b0d10; --card: #14161a; --text: #e0e0e0; --dim: #a0a0a0; --border: #2a2e35; --danger: #e0555a; --danger-bg: #2a1d1f; }
     * { box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 168px 20px 60px; margin:0; display: flex; flex-direction: column; align-items: center; }
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 168px 20px 60px 160px; margin:0; display: flex; flex-direction: column; align-items: center; }
     .sticky-header { position: fixed; top: 0; width: 100%; padding: 14px 0 12px; background: rgba(11, 13, 16, 0.98); border-bottom: 2px solid var(--d2-gold); display: flex; flex-direction: column; align-items: center; z-index: 1000; gap: 8px; }
     #searchBar { width: 460px; max-width: 90vw; padding: 12px 14px; background: #000; border: 1px solid var(--d2-gold); color: white; font-size: 14px; border-radius: 4px; }
     .header-row { display:flex; align-items:center; gap: 16px; flex-wrap: wrap; justify-content:center; }
     #progressText { font-weight:700; color:var(--d2-gold); font-size: 14px; }
-    .class-tabs-row { display:flex; gap:6px; }
+    .side-menu { position: fixed; left: 0; top: 168px; width: 140px; padding: 14px 10px; display: flex; flex-direction: column; gap: 8px; z-index: 900; }
+    .side-menu .class-tab-btn { text-align: center; padding: 9px 12px; }
     .class-tab-btn {
       padding: 5px 12px; border-radius: 4px; border: 1px solid var(--border); background: var(--card);
       color: var(--dim); font-size: 12px; cursor: pointer; font-weight: 600;
@@ -149,12 +150,6 @@
 <div class="sticky-header">
     <input type="text" id="searchBar" placeholder="Search all 56 sets..." onkeyup="filterSets()">
     <div class="header-row">
-        <div class="class-tabs-row" id="class-tabs">
-            <div class="class-tab-btn active" data-class="titan">Titan</div>
-            <div class="class-tab-btn" data-class="hunter">Hunter</div>
-            <div class="class-tab-btn" data-class="warlock">Warlock</div>
-            <div class="class-tab-btn" id="wishlist-view-btn" style="margin-left:6px;">Weapon Wishlist</div>
-        </div>
         <div id="progressText">0 / 840 collected</div>
         <button class="pill" id="reload-icons-btn">Reload generic icons</button>
         <button class="pill" id="autofill-bonus-icons-btn">Auto-fill set bonus icons</button>
@@ -175,6 +170,13 @@
         <button class="load-banner-dismiss" id="load-banner-dismiss" style="display:none;">✕</button>
     </div>
 </div>
+
+<nav class="side-menu" id="class-tabs">
+    <div class="class-tab-btn active" data-class="titan">Titan</div>
+    <div class="class-tab-btn" data-class="hunter">Hunter</div>
+    <div class="class-tab-btn" data-class="warlock">Warlock</div>
+    <div class="class-tab-btn" id="wishlist-view-btn">Weapon Wishlist</div>
+</nav>
 
 <div id="armor-view">
   <div id="confirm-container"></div>
@@ -212,6 +214,14 @@
   </div>
 </div>
 
+<script>
+(function () {
+  const h = document.querySelector('.sticky-header'), m = document.querySelector('.side-menu');
+  function sync() { m.style.top = h.offsetHeight + 'px'; }
+  sync(); window.addEventListener('resize', sync); window.addEventListener('load', sync);
+  if (window.ResizeObserver) new ResizeObserver(sync).observe(h);
+})();
+</script>
 <script>
 (function () {
   // Paste your own Bungie.net API key here. Get one at https://www.bungie.net/en/Application
