@@ -8,7 +8,7 @@
     :root { --d2-gold: #e6b85c; --bg: #0b0d10; --card: #14161a; --text: #e0e0e0; --dim: #a0a0a0; --border: #2a2e35; --danger: #e0555a; --danger-bg: #2a1d1f; }
     * { box-sizing: border-box; }
     body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 168px 20px 60px 160px; margin:0; display: flex; flex-direction: column; align-items: center; }
-    .sticky-header { position: fixed; top: 0; width: 100%; padding: 14px 0 12px; background: rgba(11, 13, 16, 0.98); border-bottom: 2px solid var(--d2-gold); display: flex; flex-direction: column; align-items: center; z-index: 1000; gap: 8px; }
+    .sticky-header { position: fixed; top: 0; left: 0; width: 100%; padding: 14px 0 12px; background: rgba(11, 13, 16, 0.98); border-bottom: 2px solid var(--d2-gold); display: flex; flex-direction: column; align-items: center; z-index: 1000; gap: 8px; }
     #searchBar { width: 460px; max-width: 90vw; padding: 12px 14px; background: #000; border: 1px solid var(--d2-gold); color: white; font-size: 14px; border-radius: 4px; }
     .header-row { display:flex; align-items:center; gap: 16px; flex-wrap: wrap; justify-content:center; }
     #progressText { font-weight:700; color:var(--d2-gold); font-size: 14px; }
@@ -154,11 +154,13 @@
     body.layout-editing [data-mv] { outline: 1px dashed var(--d2-gold); outline-offset: 2px; cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
     body.layout-editing [data-mv] * { pointer-events: none; }
     body.layout-editing [data-mvblock] { outline: 2px dashed #6f9bff; outline-offset: -2px; cursor: move; touch-action: none; }
+    .lay-rz { display: none; position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; background: #6f9bff; border-top-left-radius: 6px; cursor: nwse-resize; z-index: 1600; touch-action: none; }
+    body.layout-editing .lay-rz { display: block; }
     body.layout-editing .lay-dragging { outline-style: solid !important; z-index: 1500; }
 </style>
 </head>
 <body>
-<div class="sticky-header" data-mvblock="header">
+<div class="sticky-header" data-mvblock="header"><span class="lay-rz" title="Resize"></span>
     <input type="text" id="searchBar" data-mv="search" placeholder="Search all 56 sets..." onkeyup="filterSets()">
     <div class="header-row">
         <div id="progressText" data-mv="progress">0 / 840 collected</div>
@@ -182,7 +184,7 @@
     </div>
 </div>
 
-<nav class="side-menu" id="class-tabs" data-mvblock="sidebar">
+<nav class="side-menu" id="class-tabs" data-mvblock="sidebar"><span class="lay-rz" title="Resize"></span>
     <div class="class-tab-btn active" data-class="titan" data-mv="tab-titan">Titan</div>
     <div class="class-tab-btn" data-class="hunter" data-mv="tab-hunter">Hunter</div>
     <div class="class-tab-btn" data-class="warlock" data-mv="tab-warlock">Warlock</div>
@@ -1925,7 +1927,7 @@
 })();
 </script>
 <div id="layout-panel">
-  <span class="lay-hint" id="layout-hint">Drag the header, the side menu, or any element inside them.</span>
+  <span class="lay-hint" id="layout-hint">Drag the header, the side menu, or any element inside them. Resize a block from its blue corner.</span>
   <button class="pill lay-extra" id="layout-reset">Reset</button>
   <button class="pill lay-extra" id="layout-import">Import</button>
   <button class="pill lay-extra" id="layout-export">Export</button>
@@ -1937,17 +1939,31 @@
 (function () {
   const KEY = 'destiny2-layout-v1';
   const GRID = 5;
+  const MIN = { header: { w: 480, h: 70 }, sidebar: { w: 100, h: 60 } };
+  const DEF_PAD_TOP = 168, DEF_PAD_LEFT = 160;
   let L = {}, editing = false, act = null;
   try { const raw = JSON.parse(localStorage.getItem(KEY) || '{}'); if (raw && typeof raw === 'object') L = raw; } catch (e) { L = {}; }
 
   const nodes = () => document.querySelectorAll('[data-mv],[data-mvblock]');
   const idOf = (el) => el.dataset.mv || el.dataset.mvblock;
-  const valid = (p) => p && typeof p.x === 'number' && typeof p.y === 'number' && isFinite(p.x) && isFinite(p.y);
+  const num = (v) => typeof v === 'number' && isFinite(v);
+  const valid = (p) => p && num(p.x) && num(p.y);
   function paint(el) {
     const p = L[idOf(el)];
     el.style.transform = valid(p) && (p.x || p.y) ? 'translate(' + p.x + 'px,' + p.y + 'px)' : '';
+    if (el.dataset.mvblock) {
+      el.style.width = p && num(p.w) ? p.w + 'px' : '';
+      el.style.height = p && num(p.h) ? p.h + 'px' : '';
+    }
   }
-  function paintAll() { nodes().forEach(paint); }
+  function padding() {
+    const h = L.header, sd = L.sidebar;
+    const top = Math.max(DEF_PAD_TOP, h && num(h.h) ? h.h + 8 : 0);
+    const left = Math.max(DEF_PAD_LEFT, sd && num(sd.w) ? sd.w + 20 : 0);
+    document.body.style.paddingTop = top > DEF_PAD_TOP ? top + 'px' : '';
+    document.body.style.paddingLeft = left > DEF_PAD_LEFT ? left + 'px' : '';
+  }
+  function paintAll() { nodes().forEach(paint); padding(); }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(L)); } catch (e) {} }
 
   function setEditing(v) {
@@ -1959,7 +1975,6 @@
   }
   document.getElementById('layout-toggle').addEventListener('click', () => setEditing(!editing));
 
-  // Block normal interaction (clicks, focus) on page controls while editing
   document.addEventListener('click', (e) => {
     if (editing && !e.target.closest('#layout-panel')) { e.preventDefault(); e.stopPropagation(); }
   }, true);
@@ -1969,20 +1984,32 @@
 
   document.addEventListener('pointerdown', (e) => {
     if (!editing || e.target.closest('#layout-panel')) return;
-    const el = e.target.closest('[data-mv]') || e.target.closest('[data-mvblock]');
+    const handle = e.target.closest('.lay-rz');
+    const el = handle ? handle.closest('[data-mvblock]') : (e.target.closest('[data-mv]') || e.target.closest('[data-mvblock]'));
     if (!el) return;
     e.preventDefault();
     const k = idOf(el), o = valid(L[k]) ? L[k] : { x: 0, y: 0 };
-    act = { el, k, sx: e.clientX, sy: e.clientY, ox: o.x, oy: o.y, block: !!el.dataset.mvblock };
+    const r = el.getBoundingClientRect();
+    act = { el, k, sx: e.clientX, sy: e.clientY, ox: o.x, oy: o.y, block: !!el.dataset.mvblock, resize: !!handle,
+            ow: r.width, oh: r.height, left: r.left, top: r.top };
     el.classList.add('lay-dragging');
-    try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    try { (handle || el).setPointerCapture(e.pointerId); } catch (err) {}
   }, true);
 
   document.addEventListener('pointermove', (e) => {
     if (!act) return;
     const snap = (v) => Math.round(v / GRID) * GRID;
+    if (act.resize) {
+      const m = MIN[act.k] || { w: 60, h: 40 };
+      const w = Math.max(m.w, Math.min(snap(act.ow + e.clientX - act.sx), window.innerWidth - act.left));
+      const h = Math.max(m.h, Math.min(snap(act.oh + e.clientY - act.sy), window.innerHeight - act.top));
+      L[act.k] = { x: act.ox, y: act.oy, w: Math.round(w), h: Math.round(h) };
+      paint(act.el); padding();
+      return;
+    }
     let x = snap(act.ox + e.clientX - act.sx), y = snap(act.oy + e.clientY - act.sy);
-    L[act.k] = { x, y }; paint(act.el);
+    const keep = L[act.k] || {};
+    L[act.k] = Object.assign({}, keep, { x, y }); paint(act.el);
     const r = act.el.getBoundingClientRect();
     let b;
     if (act.block) b = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
@@ -1991,19 +2018,19 @@
     if (r.right > b.right) x -= r.right - b.right;
     if (r.top < b.top) y += b.top - r.top;
     if (r.bottom > b.bottom) y -= r.bottom - b.bottom;
-    L[act.k] = { x: Math.round(x), y: Math.round(y) }; paint(act.el);
+    L[act.k] = Object.assign({}, keep, { x: Math.round(x), y: Math.round(y) }); paint(act.el);
   });
   function end() { if (act) { act.el.classList.remove('lay-dragging'); act = null; save(); } }
   document.addEventListener('pointerup', end);
   document.addEventListener('pointercancel', end);
 
   document.getElementById('layout-reset').addEventListener('click', () => {
-    if (!confirm('Reset the layout to the default positions?')) return;
+    if (!confirm('Reset the layout to the default positions and sizes?')) return;
     L = {}; paintAll(); save();
   });
 
   document.getElementById('layout-export').addEventListener('click', () => {
-    const out = { version: 1, positions: L };
+    const out = { version: 2, positions: L };
     const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'd2-checklist-layout.json';
@@ -2022,7 +2049,12 @@
         const pos = parsed && parsed.positions;
         if (!pos || typeof pos !== 'object') throw new Error('bad');
         const known = new Set(Array.from(nodes()).map(idOf)), next = {};
-        Object.keys(pos).forEach((k) => { if (known.has(k) && valid(pos[k])) next[k] = { x: Math.round(pos[k].x), y: Math.round(pos[k].y) }; });
+        Object.keys(pos).forEach((k) => {
+          if (!known.has(k) || !valid(pos[k])) return;
+          const q = { x: Math.round(pos[k].x), y: Math.round(pos[k].y) };
+          if ((k === 'header' || k === 'sidebar') && num(pos[k].w) && num(pos[k].h)) { q.w = Math.round(pos[k].w); q.h = Math.round(pos[k].h); }
+          next[k] = q;
+        });
         L = next; paintAll(); save();
       } catch (err) { alert('That layout file is not valid.'); }
       fileInput.value = '';
