@@ -144,38 +144,49 @@
     .wishlist-perk-slot.filled { border-color: var(--d2-gold); }
     .wishlist-delete-btn { background: none; border: none; color: var(--dim); cursor: pointer; font-size: 14px; padding: 4px 8px; }
     .wishlist-delete-btn:hover { color: var(--danger); }
+
+    /* --- Layout editor --- */
+    #layout-panel { position: fixed; right: 16px; bottom: 16px; z-index: 3000; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 90vw; padding: 8px; background: rgba(11,13,16,0.95); border: 1px solid var(--border); border-radius: 6px; }
+    #layout-panel .lay-hint { display: none; width: 100%; text-align: right; font-size: 11px; color: var(--dim); }
+    body.layout-editing #layout-panel .lay-hint { display: block; }
+    #layout-panel .lay-extra { display: none; }
+    body.layout-editing #layout-panel .lay-extra { display: inline-block; }
+    body.layout-editing [data-mv] { outline: 1px dashed var(--d2-gold); outline-offset: 2px; cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
+    body.layout-editing [data-mv] * { pointer-events: none; }
+    body.layout-editing [data-mvblock] { outline: 2px dashed #6f9bff; outline-offset: -2px; cursor: move; touch-action: none; }
+    body.layout-editing .lay-dragging { outline-style: solid !important; z-index: 1500; }
 </style>
 </head>
 <body>
-<div class="sticky-header">
-    <input type="text" id="searchBar" placeholder="Search all 56 sets..." onkeyup="filterSets()">
+<div class="sticky-header" data-mvblock="header">
+    <input type="text" id="searchBar" data-mv="search" placeholder="Search all 56 sets..." onkeyup="filterSets()">
     <div class="header-row">
-        <div id="progressText">0 / 840 collected</div>
-        <button class="pill" id="reload-icons-btn">Reload generic icons</button>
-        <button class="pill" id="autofill-bonus-icons-btn">Auto-fill set bonus icons</button>
-        <button class="pill" id="reset-btn">Reset this class</button>
+        <div id="progressText" data-mv="progress">0 / 840 collected</div>
+        <button class="pill" id="reload-icons-btn" data-mv="reload-icons">Reload generic icons</button>
+        <button class="pill" id="autofill-bonus-icons-btn" data-mv="autofill-icons">Auto-fill set bonus icons</button>
+        <button class="pill" id="reset-btn" data-mv="reset-class">Reset this class</button>
     </div>
     <div class="header-row" style="font-size:11px;">
-        <span style="color:var(--dim);">Your sync code:</span>
-        <code id="sync-code-display" style="background:#000; padding:2px 8px; border-radius:4px; border:1px solid var(--border); color:var(--d2-gold);"></code>
-        <button class="pill" id="copy-sync-code-btn">Copy</button>
+        <span style="color:var(--dim);" data-mv="sync-label">Your sync code:</span>
+        <code id="sync-code-display" data-mv="sync-code" style="background:#000; padding:2px 8px; border-radius:4px; border:1px solid var(--border); color:var(--d2-gold);"></code>
+        <button class="pill" id="copy-sync-code-btn" data-mv="sync-copy">Copy</button>
         <span style="color:var(--dim);">|</span>
-        <input type="text" id="load-sync-code-input" placeholder="Enter a code to load..." style="width:220px; padding:5px 8px; background:#000; border:1px solid var(--border); color:white; border-radius:4px; font-size:11px;">
-        <button class="pill" id="load-sync-code-btn">Load</button>
+        <input type="text" id="load-sync-code-input" data-mv="sync-input" placeholder="Enter a code to load..." style="width:220px; padding:5px 8px; background:#000; border:1px solid var(--border); color:white; border-radius:4px; font-size:11px;">
+        <button class="pill" id="load-sync-code-btn" data-mv="sync-load">Load</button>
         <span id="sync-status" style="color:#8fd6a3;"></span>
     </div>
-    <div class="load-banner" id="load-banner">
+    <div class="load-banner" id="load-banner" data-mv="load-banner">
         <span id="load-banner-text">Loading item database...</span>
         <div class="load-bar-track"><div class="load-bar-fill" id="load-bar-fill"></div></div>
         <button class="load-banner-dismiss" id="load-banner-dismiss" style="display:none;">✕</button>
     </div>
 </div>
 
-<nav class="side-menu" id="class-tabs">
-    <div class="class-tab-btn active" data-class="titan">Titan</div>
-    <div class="class-tab-btn" data-class="hunter">Hunter</div>
-    <div class="class-tab-btn" data-class="warlock">Warlock</div>
-    <div class="class-tab-btn" id="wishlist-view-btn">Weapon Wishlist</div>
+<nav class="side-menu" id="class-tabs" data-mvblock="sidebar">
+    <div class="class-tab-btn active" data-class="titan" data-mv="tab-titan">Titan</div>
+    <div class="class-tab-btn" data-class="hunter" data-mv="tab-hunter">Hunter</div>
+    <div class="class-tab-btn" data-class="warlock" data-mv="tab-warlock">Warlock</div>
+    <div class="class-tab-btn" id="wishlist-view-btn" data-mv="tab-wishlist">Weapon Wishlist</div>
 </nav>
 
 <div id="armor-view">
@@ -1911,6 +1922,115 @@
   }
 
   init();
+})();
+</script>
+<div id="layout-panel">
+  <span class="lay-hint" id="layout-hint">Drag the header, the side menu, or any element inside them.</span>
+  <button class="pill lay-extra" id="layout-reset">Reset</button>
+  <button class="pill lay-extra" id="layout-import">Import</button>
+  <button class="pill lay-extra" id="layout-export">Export</button>
+  <button class="pill" id="layout-toggle">Edit layout</button>
+  <input type="file" id="layout-file" accept="application/json,.json" style="display:none;">
+</div>
+
+<script>
+(function () {
+  const KEY = 'destiny2-layout-v1';
+  const GRID = 5;
+  let L = {}, editing = false, act = null;
+  try { const raw = JSON.parse(localStorage.getItem(KEY) || '{}'); if (raw && typeof raw === 'object') L = raw; } catch (e) { L = {}; }
+
+  const nodes = () => document.querySelectorAll('[data-mv],[data-mvblock]');
+  const idOf = (el) => el.dataset.mv || el.dataset.mvblock;
+  const valid = (p) => p && typeof p.x === 'number' && typeof p.y === 'number' && isFinite(p.x) && isFinite(p.y);
+  function paint(el) {
+    const p = L[idOf(el)];
+    el.style.transform = valid(p) && (p.x || p.y) ? 'translate(' + p.x + 'px,' + p.y + 'px)' : '';
+  }
+  function paintAll() { nodes().forEach(paint); }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(L)); } catch (e) {} }
+
+  function setEditing(v) {
+    editing = v;
+    document.body.classList.toggle('layout-editing', v);
+    document.getElementById('layout-toggle').textContent = v ? 'Done' : 'Edit layout';
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    if (!v) save();
+  }
+  document.getElementById('layout-toggle').addEventListener('click', () => setEditing(!editing));
+
+  // Block normal interaction (clicks, focus) on page controls while editing
+  document.addEventListener('click', (e) => {
+    if (editing && !e.target.closest('#layout-panel')) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  document.addEventListener('mousedown', (e) => {
+    if (editing && !e.target.closest('#layout-panel')) e.preventDefault();
+  }, true);
+
+  document.addEventListener('pointerdown', (e) => {
+    if (!editing || e.target.closest('#layout-panel')) return;
+    const el = e.target.closest('[data-mv]') || e.target.closest('[data-mvblock]');
+    if (!el) return;
+    e.preventDefault();
+    const k = idOf(el), o = valid(L[k]) ? L[k] : { x: 0, y: 0 };
+    act = { el, k, sx: e.clientX, sy: e.clientY, ox: o.x, oy: o.y, block: !!el.dataset.mvblock };
+    el.classList.add('lay-dragging');
+    try { el.setPointerCapture(e.pointerId); } catch (err) {}
+  }, true);
+
+  document.addEventListener('pointermove', (e) => {
+    if (!act) return;
+    const snap = (v) => Math.round(v / GRID) * GRID;
+    let x = snap(act.ox + e.clientX - act.sx), y = snap(act.oy + e.clientY - act.sy);
+    L[act.k] = { x, y }; paint(act.el);
+    const r = act.el.getBoundingClientRect();
+    let b;
+    if (act.block) b = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+    else { const parent = act.el.closest('[data-mvblock]'); b = parent ? parent.getBoundingClientRect() : { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }; }
+    if (r.left < b.left) x += b.left - r.left;
+    if (r.right > b.right) x -= r.right - b.right;
+    if (r.top < b.top) y += b.top - r.top;
+    if (r.bottom > b.bottom) y -= r.bottom - b.bottom;
+    L[act.k] = { x: Math.round(x), y: Math.round(y) }; paint(act.el);
+  });
+  function end() { if (act) { act.el.classList.remove('lay-dragging'); act = null; save(); } }
+  document.addEventListener('pointerup', end);
+  document.addEventListener('pointercancel', end);
+
+  document.getElementById('layout-reset').addEventListener('click', () => {
+    if (!confirm('Reset the layout to the default positions?')) return;
+    L = {}; paintAll(); save();
+  });
+
+  document.getElementById('layout-export').addEventListener('click', () => {
+    const out = { version: 1, positions: L };
+    const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'd2-checklist-layout.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+
+  const fileInput = document.getElementById('layout-file');
+  document.getElementById('layout-import').addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files && fileInput.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const parsed = JSON.parse(rd.result);
+        const pos = parsed && parsed.positions;
+        if (!pos || typeof pos !== 'object') throw new Error('bad');
+        const known = new Set(Array.from(nodes()).map(idOf)), next = {};
+        Object.keys(pos).forEach((k) => { if (known.has(k) && valid(pos[k])) next[k] = { x: Math.round(pos[k].x), y: Math.round(pos[k].y) }; });
+        L = next; paintAll(); save();
+      } catch (err) { alert('That layout file is not valid.'); }
+      fileInput.value = '';
+    };
+    rd.readAsText(f);
+  });
+
+  paintAll();
 })();
 </script>
 </body>
