@@ -196,6 +196,33 @@
     .gv-side textarea[readonly] { min-height: 0; overflow: hidden; }
     .gv-side input[readonly], .gv-side textarea[readonly] { border-color: transparent; background: transparent; padding-left: 0; padding-right: 0; resize: none; }
     #gv-title[readonly] { font-size: 16px; font-weight: 700; color: var(--d2-gold); }
+    .guides-info { font-size: 12px; color: var(--dim); margin-bottom: 10px; }
+    .guides-info:empty { display: none; }
+    .g-thumb.noimg { display: flex; align-items: center; justify-content: center; background: #0e1014; }
+    .g-noimg { color: var(--dim); font-size: 12px; padding: 0 10px; text-align: center; word-break: break-all; }
+    .g-links { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: 6px; }
+    .g-link { font-size: 11px; color: var(--d2-gold); text-decoration: none; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .g-link:hover { text-decoration: underline; }
+    .g-more { font-size: 11px; color: var(--dim); }
+    #gv-noimg { color: var(--dim); font-size: 14px; text-align: center; padding: 0 30px; }
+    .gv-kwchips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .gv-kwchip { padding: 3px 9px; border-radius: 12px; border: 1px solid var(--border); background: #000; color: var(--dim); font-size: 11px; cursor: pointer; }
+    .gv-kwchip:hover { border-color: var(--d2-gold); color: var(--d2-gold); }
+    #gv-links { min-height: 90px; }
+    .gv-linklist { display: flex; flex-direction: column; gap: 6px; }
+    .gv-linklist a { color: var(--d2-gold); font-size: 13px; text-decoration: none; word-break: break-word; }
+    .gv-linklist a:hover { text-decoration: underline; }
+    #gv-video { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1; cursor: default; }
+    .gv-vframe { position: relative; width: min(calc(100% - 140px), 1200px); aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .gv-vframe iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .gv-vplay { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: #000; cursor: pointer; }
+    .gv-vplay img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; display: block; }
+    .gv-vtri { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 72px; height: 72px; border-radius: 50%; background: rgba(0, 0, 0, 0.65); border: 2px solid var(--d2-gold); color: var(--d2-gold); font-size: 28px; display: flex; align-items: center; justify-content: center; }
+    .gv-vplay:hover .gv-vtri { background: rgba(60, 46, 10, 0.85); }
+    .gv-vcap { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; color: #ccc; font-size: 12px; text-shadow: 0 1px 3px #000; }
+    .gv-vback { position: absolute; left: 12px; top: 12px; z-index: 3; }
+    .gv-linkrow { display: flex; align-items: center; gap: 8px; }
+    .gv-play { flex: none; color: var(--d2-gold); }
     .gv-actions { display: flex; gap: 6px; flex-wrap: wrap; }
     .gv-hint { font-size: 11px; color: var(--dim); line-height: 1.4; }
     body.viewer-open { overflow: hidden; }
@@ -304,9 +331,10 @@
   </div>
   <div class="guides-toolbar">
     <button class="pill owner-only" id="guides-add-btn" hidden>+ Add images</button>
+    <button class="pill owner-only" id="guides-addlink-btn" title="Add an entry that is only a link, with no image" hidden>+ Add link</button>
     <input type="file" id="guides-file" accept="image/*" multiple style="display:none;" />
     <input type="text" class="owner-only" id="guides-url-input" placeholder="…or paste an image link and press Enter" hidden />
-    <input type="text" id="guides-search" placeholder="Search guides..." />
+    <input type="text" id="guides-search" placeholder="Search guides… try dsc, vog or a keyword" />
     <button class="pill owner-only" id="guides-pkg-btn" title="Download a zip to publish on the site" hidden>Export package</button>
     <button class="pill owner-only" id="guides-export-btn" title="Download one backup file" hidden>Backup</button>
     <button class="pill owner-only" id="guides-import-btn" title="Restore a backup file" hidden>Import</button>
@@ -314,6 +342,7 @@
     <input type="file" id="guides-import-file" accept="application/json,.json" style="display:none;" />
   </div>
   <div class="guides-chips" id="guides-chips"></div>
+  <div class="guides-info" id="guides-info"></div>
   <div class="modal-status" id="guides-status"></div>
   <div class="guides-drop owner-only" hidden>Drop images here, or press Ctrl+V to paste a screenshot</div>
   <div class="guides-grid" id="guides-grid"></div>
@@ -340,6 +369,8 @@
 <div class="gv" id="guides-viewer">
   <div class="gv-stage" id="gv-stage">
     <img id="gv-img" alt="" draggable="false" />
+    <div id="gv-video" hidden></div>
+    <div id="gv-noimg" hidden>No image for this entry. Use the links in the side panel.</div>
     <div class="gv-tools" id="gv-tools">
       <button class="pill" id="gv-fit">Fit</button>
       <button class="pill" id="gv-fitw">Fit width</button>
@@ -353,9 +384,11 @@
     <input type="text" id="gv-title" placeholder="Title" />
     <input type="text" id="gv-cat" list="guides-cats" placeholder="Category (Guide, Mission, Raid, ...)" />
     <datalist id="guides-cats"></datalist>
+    <input type="text" id="gv-kw" class="owner-only" placeholder="Keywords: dsc, deep stone crypt, taniks…" hidden />
+    <div class="gv-kwchips" id="gv-kwchips"></div>
     <textarea id="gv-notes" placeholder="Notes"></textarea>
-    <input type="text" id="gv-link" placeholder="Source link (optional)" />
-    <a id="gv-open" href="#" target="_blank" rel="noopener noreferrer" style="display:none;color:var(--d2-gold);font-size:12px;">Open source link ↗</a>
+    <textarea id="gv-links" class="owner-only" placeholder="Links, one per line. Add a label after a bar:&#10;https://… | Video walkthrough" hidden></textarea>
+    <div class="gv-linklist" id="gv-linklist"></div>
     <div class="gv-actions">
       <button class="pill owner-only" id="gv-save" hidden>Save</button>
       <button class="pill owner-only" id="gv-del" style="color:var(--danger);" hidden>Delete</button>
@@ -2125,8 +2158,7 @@
   });
 })();
 </script>
-<script>
-(function () {
+<script>(function () {
   const DB_NAME = 'tgs-guides', STORE = 'items';
   const $ = (id) => document.getElementById(id);
   const view = $('guides-view'), grid = $('guides-grid'), emptyEl = $('guides-empty'), statusEl = $('guides-status'),
@@ -2219,6 +2251,80 @@
   }
   function forget(id) { const k = urlCache.get(id); if (k) { Object.values(k).forEach((u) => URL.revokeObjectURL(u)); urlCache.delete(id); } }
 
+  /* ---------- item fields: links and keywords ---------- */
+  const MAX_LINKS = 10, MAX_KW = 30;
+  const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return String(u); } };
+  function cleanLinks(arr) {
+    const out = [];
+    (Array.isArray(arr) ? arr : []).forEach((l) => {
+      const u = safeLink(l && l.url);
+      if (u && out.length < MAX_LINKS && !out.some((x) => x.url === u)) out.push({ url: u, label: String((l && l.label) || '').trim().slice(0, 80) });
+    });
+    return out;
+  }
+  function cleanKw(v) {
+    const raw = Array.isArray(v) ? v : String(v || '').split(/[,;\n]+/), out = [];
+    raw.forEach((k) => { const t = String(k).trim().slice(0, 40); if (t && out.length < MAX_KW && !out.some((x) => x.toLowerCase() === t.toLowerCase())) out.push(t); });
+    return out;
+  }
+  function parseLinkLines(text) {
+    const links = [], bad = [];
+    String(text || '').split(/\n+/).forEach((line) => {
+      const l = line.trim(); if (!l) return;
+      const m = l.match(/^(\S+)\s*(?:\|\s*(.*))?$/), u = m && safeLink(m[1]);
+      if (!u) { bad.push(l); return; }
+      links.push({ url: u, label: (m[2] || '').trim() });
+    });
+    return { links: cleanLinks(links), bad };
+  }
+  const linksToText = (links) => (links || []).map((l) => l.url + (l.label ? ' | ' + l.label : '')).join('\n');
+  function fixItem(it) {
+    if (!Array.isArray(it.links)) it.links = it.link ? cleanLinks([{ url: it.link, label: '' }]) : [];
+    it.link = it.links[0] ? it.links[0].url : '';
+    if (!Array.isArray(it.keywords)) it.keywords = [];
+    return it;
+  }
+  const hasImage = (it) => !!(it.url || it.file || it.blob);
+
+  /* ---------- YouTube links ---------- */
+  const YT_ID = /^[A-Za-z0-9_-]{11}$/, YT_LIST = /^[A-Za-z0-9_-]{10,60}$/;
+  function ytParse(u) {
+    try {
+      const x = new URL(u), h = x.hostname.replace(/^(www|m|music)\./, '');
+      let id = '';
+      if (h === 'youtu.be') id = x.pathname.split('/')[1] || '';
+      else if (h === 'youtube.com' || h === 'youtube-nocookie.com') {
+        const seg = x.pathname.split('/').filter(Boolean);
+        if (seg[0] === 'watch') id = x.searchParams.get('v') || '';
+        else if (['shorts', 'embed', 'live', 'v'].includes(seg[0])) id = seg[1] || '';
+      } else return null;
+      const list = x.searchParams.get('list') || '';
+      let start = 0;
+      const t = x.searchParams.get('t') || x.searchParams.get('start') || ((x.hash.match(/t=([^&]+)/) || [])[1]) || '';
+      const m = String(t).match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/);
+      if (m && (m[1] || m[2] || m[3])) start = (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0);
+      if (YT_ID.test(id)) return { id, list: YT_LIST.test(list) ? list : '', start };
+      if (YT_LIST.test(list)) return { id: '', list, start: 0 };
+      return null;
+    } catch (e) { return null; }
+  }
+  function ytEmbed(v, autoplay) {
+    const q = new URLSearchParams();
+    if (v.list) q.set('list', v.list);
+    if (v.start) q.set('start', String(v.start));
+    if (autoplay) q.set('autoplay', '1');
+    q.set('rel', '0');
+    return 'https://www.youtube-nocookie.com/embed/' + (v.id || 'videoseries') + '?' + q.toString();
+  }
+  async function ytTitle(url) {
+    try {
+      const c = new AbortController(), t = setTimeout(() => c.abort(), 4000);
+      const r = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url), { signal: c.signal });
+      clearTimeout(t); if (!r.ok) return '';
+      const j = await r.json(); return String((j && j.title) || '').trim().slice(0, 200);
+    } catch (e) { return ''; }
+  }
+
   /* ---------- add ---------- */
   async function addFiles(files) {
     if (!OWNER) return;
@@ -2229,7 +2335,7 @@
     for (const f of imgs) {
       try {
         const im = await buildImage(f, false);
-        const it = { id: newId(), title: (f.name || '').replace(/\.[^.]+$/, '') || 'Untitled', category: '', notes: '', link: '', added: Date.now(), blob: im.blob, thumb: im.thumb, w: im.w, h: im.h };
+        const it = { id: newId(), title: (f.name || '').replace(/\.[^.]+$/, '') || 'Untitled', category: '', notes: '', link: '', links: [], keywords: [], added: Date.now(), blob: im.blob, thumb: im.thumb, w: im.w, h: im.h };
         await dbPut(it); items.push(it); n++;
       } catch (e) { say('Could not save an image: ' + (e && e.message || e), true); }
     }
@@ -2241,29 +2347,106 @@
     const href = safeLink(raw);
     if (!href) { say('That does not look like a web link (http or https).', true); return; }
     let title = ''; try { const u = new URL(href); title = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || u.hostname).replace(/\.[^.]+$/, ''); } catch (e) { title = 'Linked image'; }
-    const it = { id: newId(), title: title || 'Linked image', category: '', notes: '', link: '', added: Date.now(), url: href };
+    const it = { id: newId(), title: title || 'Linked image', category: '', notes: '', link: '', links: [], keywords: [], added: Date.now(), url: href };
     try { await dbPut(it); items.push(it); fCat = ''; render(); say('Added link.'); $('guides-url-input').value = ''; }
     catch (e) { say('Could not save: ' + (e && e.message || e), true); }
   }
 
   /* ---------- list ---------- */
-  function filtered() {
-    const q = fQuery.trim().toLowerCase();
-    return items.filter((it) => (!fCat || (it.category || '').trim().toLowerCase() === fCat.toLowerCase()) &&
-      (!q || [it.title, it.notes, it.category, it.link].some((v) => (v || '').toLowerCase().includes(q)))).sort((a, b) => b.added - a.added);
+  /* ---------- search: keywords + Destiny abbreviations ---------- */
+  const infoEl = $('guides-info');
+  const norm = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/['’`]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const pad = (s) => ' ' + s + ' ';
+  const natural = (a, b) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
+  // Each entry: display name + abbreviations people type. Typing any of them finds all of them.
+  const GROUP_DEFS = [
+    ['Last Wish', ['lw']], ['Garden of Salvation', ['gos', 'garden']], ['Deep Stone Crypt', ['dsc', 'crypt']],
+    ['Vault of Glass', ['vog', 'vault']], ['Vow of the Disciple', ['vow']], ["King's Fall", ['kf']],
+    ['Root of Nightmares', ['ron', 'root']], ["Crota's End", ['ce', 'crota']], ["Salvation's Edge", ['se']],
+    ['The Desert Perpetual', ['dp']], ['Crown of Sorrow', ['cos']], ['Scourge of the Past', ['sotp', 'scourge']],
+    ['Leviathan', ['lev']], ['Eater of Worlds', ['eow']], ['Spire of Stars', ['sos']],
+    ['Shattered Throne', ['st']], ['Pit of Heresy', ['poh']], ['Grasp of Avarice', ['goa']],
+    ['Spire of the Watcher', ['sotw']], ['Ghosts of the Deep', ['god']], ["Warlord's Ruin", ['wr']],
+    ["Vesper's Host", ['vh']], ['Sundered Doctrine', ['sd']], ['Grandmaster Nightfall', ['gm', 'gms']],
+    ['Nightfall', ['nf']], ['Trials of Osiris', ['trials']], ['Iron Banner', ['ib']]
+  ];
+  const GROUPS = GROUP_DEFS.map((g) => ({ name: g[0], terms: [norm(g[0])].concat(g[1].map(norm)) }));
+  const TERMS = []; GROUPS.forEach((g, gi) => g.terms.forEach((t) => TERMS.push([t, gi]))); TERMS.sort((a, b) => b[0].length - a[0].length);
+  const hasTerm = (hay, gi) => GROUPS[gi].terms.some((t) => hay.includes(pad(t)));
+  const fcache = new Map();
+  function fields(it) {
+    let f = fcache.get(it.id);
+    if (!f) {
+      f = { t: pad(norm(it.title)), k: pad(norm((it.category || '') + ' ' + (it.keywords || []).join(' '))),
+            r: pad(norm((it.notes || '') + ' ' + (it.links || []).map((l) => (l.label || '') + ' ' + l.url).join(' '))) };
+      fcache.set(it.id, f);
+    }
+    return f;
   }
+  const STOP = new Set(['of', 'the', 'a', 'an', 'and']);
+  function parseQuery(raw) {
+    const groups = [];
+    // 1) full multi-word names typed out ("deep stone crypt", "kings fall")
+    let q = pad(norm(raw));
+    TERMS.forEach(([t, gi]) => { if (t.includes(' ') && !groups.includes(gi) && q.includes(pad(t))) { groups.push(gi); q = q.split(pad(t)).join(' '); } });
+    const tokens = q.trim().split(/\s+/).filter(Boolean);
+    // 2) part of a full name ("deep stone", "stone crypt")
+    let changed = true;
+    while (changed) {
+      changed = false;
+      outer: for (let len = tokens.length; len >= 2; len--) {
+        for (let i = 0; i + len <= tokens.length; i++) {
+          const win = tokens.slice(i, i + len);
+          if (!win.some((w) => !STOP.has(w))) continue;
+          const phrase = pad(win.join(' '));
+          const gi = GROUPS.findIndex((g, k) => !groups.includes(k) && pad(g.terms[0]).includes(phrase));
+          if (gi >= 0) { groups.push(gi); tokens.splice(i, len); changed = true; break outer; }
+        }
+      }
+    }
+    // 3) single-word abbreviations ("dsc", "vog", "crypt")
+    const rest = tokens.filter((t) => {
+      const hit = TERMS.find(([term]) => term === t);
+      if (!hit) return true;
+      if (!groups.includes(hit[1])) groups.push(hit[1]);
+      return false;
+    });
+    return { groups, tokens: rest };
+  }
+  function scoreItem(it, q) {
+    const f = fields(it); let s = 0;
+    for (const gi of q.groups) { const w = hasTerm(f.t, gi) ? 5 : hasTerm(f.k, gi) ? 4 : hasTerm(f.r, gi) ? 1 : 0; if (!w) return 0; s += w; }
+    for (const t of q.tokens) { const w = f.t.includes(t) ? 3 : f.k.includes(t) ? 2 : f.r.includes(t) ? 1 : 0; if (!w) return 0; s += w; }
+    return s;
+  }
+  let lastQuery = null;
+  function filtered() {
+    const q = fQuery.trim() ? parseQuery(fQuery) : null;
+    const searching = !!(q && (q.groups.length || q.tokens.length));
+    lastQuery = searching ? q : null;
+    let list = items.filter((it) => !fCat || catKey(it.category || '') === fCat);
+    if (searching) return list.map((it) => ({ it, s: scoreItem(it, q) })).filter((x) => x.s > 0).sort((a, b) => b.s - a.s || natural(a.it.title, b.it.title)).map((x) => x.it);
+    return list.sort(fCat ? (a, b) => natural(a.title, b.title) : (a, b) => b.added - a.added);
+  }
+  // "DSC" and "Deep Stone Crypt" count as the same category
+  function catKey(c) { const n = norm(c), hit = TERMS.find(([t]) => t === n); return hit ? 'g' + hit[1] : 'c' + n; }
   function categories() {
     const m = new Map();
-    items.forEach((it) => { const c = (it.category || '').trim(); if (c) { const k = c.toLowerCase(); if (!m.has(k)) m.set(k, { name: c, n: 0 }); m.get(k).n++; } });
+    items.forEach((it) => {
+      const c = (it.category || '').trim(); if (!c) return;
+      const k = catKey(c);
+      if (!m.has(k)) m.set(k, { key: k, name: k[0] === 'g' ? GROUPS[+k.slice(1)].name : c, n: 0 });
+      m.get(k).n++;
+    });
     return Array.from(m.values()).sort((a, b) => a.name.localeCompare(b.name));
   }
   function renderChips() {
     const cats = categories(); chipsEl.textContent = '';
     if (!cats.length) { if (fCat) fCat = ''; return; }
-    if (fCat && !cats.some((c) => c.name.toLowerCase() === fCat.toLowerCase())) fCat = '';
-    const mk = (label, val) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'g-chip' + ((val || '').toLowerCase() === fCat.toLowerCase() ? ' on' : ''); b.textContent = label; b.dataset.cat = val; chipsEl.appendChild(b); };
+    if (fCat && !cats.some((c) => c.key === fCat)) fCat = '';
+    const mk = (label, key) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'g-chip' + (key === fCat ? ' on' : ''); b.textContent = label; b.dataset.cat = key; chipsEl.appendChild(b); };
     mk('All (' + items.length + ')', '');
-    cats.forEach((c) => mk(c.name + ' (' + c.n + ')', c.name));
+    cats.forEach((c) => mk(c.name + ' (' + c.n + ')', c.key));
     const dl = $('guides-cats'); dl.textContent = '';
     cats.forEach((c) => { const o = document.createElement('option'); o.value = c.name; dl.appendChild(o); });
   }
@@ -2273,15 +2456,34 @@
     list.forEach((it) => {
       const card = document.createElement('div'); card.className = 'g-card'; card.tabIndex = 0; card.dataset.id = it.id;
       const th = document.createElement('div'); th.className = 'g-thumb';
-      const im = document.createElement('img'); im.loading = 'lazy'; im.alt = it.title || ''; im.src = srcOf(it, false);
-      im.onerror = () => th.classList.add('broken'); th.appendChild(im);
+      if (hasImage(it)) {
+        const im = document.createElement('img'); im.loading = 'lazy'; im.alt = it.title || ''; im.src = srcOf(it, false);
+        im.onerror = () => th.classList.add('broken'); th.appendChild(im);
+      } else {
+        th.classList.add('noimg');
+        const n = document.createElement('div'); n.className = 'g-noimg'; n.textContent = (it.links && it.links[0]) ? ((it.links.some((l) => ytParse(l.url)) ? '▶ ' : '') + hostOf(it.links[0].url)) : 'No image'; th.appendChild(n);
+      }
       const meta = document.createElement('div'); meta.className = 'g-meta';
       const t = document.createElement('div'); t.className = 'g-title'; t.textContent = it.title || 'Untitled';
       const c = document.createElement('div'); c.className = 'g-cat'; c.textContent = it.category || '';
-      meta.append(t, c); card.append(th, meta); grid.appendChild(card);
+      meta.append(t, c);
+      if (it.links && it.links.length) {
+        const lw = document.createElement('div'); lw.className = 'g-links';
+        it.links.slice(0, 3).forEach((l) => {
+          const a = document.createElement('a'); a.className = 'g-link'; a.href = l.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          a.textContent = l.label || hostOf(l.url); a.title = l.url; a.addEventListener('click', (e) => e.stopPropagation()); lw.appendChild(a);
+        });
+        if (it.links.length > 3) { const m = document.createElement('span'); m.className = 'g-more'; m.textContent = '+' + (it.links.length - 3); lw.appendChild(m); }
+        meta.appendChild(lw);
+      }
+      card.append(th, meta); grid.appendChild(card);
     });
+    if (lastQuery) {
+      const nl = list.reduce((n, it) => n + (it.links ? it.links.length : 0), 0), names = lastQuery.groups.map((gi) => GROUPS[gi].name);
+      infoEl.textContent = list.length + ' guide' + (list.length === 1 ? '' : 's') + (nl ? ', ' + nl + ' link' + (nl === 1 ? '' : 's') : '') + ' for “' + fQuery.trim() + '”' + (names.length ? ' (including ' + names.join(', ') + ')' : '');
+    } else infoEl.textContent = '';
     emptyEl.style.display = list.length ? 'none' : 'block';
-    emptyEl.textContent = items.length ? 'No guides match that filter.' : (OWNER ? 'Nothing here yet — add an image sheet above.' : 'No guides have been published yet.');
+    emptyEl.textContent = items.length ? 'No guides match that search.' : (OWNER ? 'Nothing here yet — add an image sheet above.' : 'No guides have been published yet.');
   }
   grid.addEventListener('click', (e) => { const c = e.target.closest('.g-card'); if (c) openViewer(c.dataset.id); });
   grid.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const c = e.target.closest('.g-card'); if (c) openViewer(c.dataset.id); } });
@@ -2303,46 +2505,90 @@
     z.x = cx - (cx - z.x) * (ns / z.s); z.y = cy - (cy - z.y) * (ns / z.s); z.s = ns; applyZ();
   }, { passive: false });
   stage.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0 || e.target.closest('.gv-tools, .gv-nav')) return;
+    if (e.button !== 0 || e.target.closest('.gv-tools, .gv-nav, #gv-video')) return;
     drag = { x: e.clientX, y: e.clientY, ox: z.x, oy: z.y }; stage.setPointerCapture(e.pointerId); stage.classList.add('grab');
   });
   stage.addEventListener('pointermove', (e) => { if (!drag) return; z.x = drag.ox + e.clientX - drag.x; z.y = drag.oy + e.clientY - drag.y; applyZ(); });
   const endDrag = () => { drag = null; stage.classList.remove('grab'); };
   stage.addEventListener('pointerup', endDrag); stage.addEventListener('pointercancel', endDrag);
-  stage.addEventListener('dblclick', (e) => { if (!e.target.closest('.gv-tools, .gv-nav')) resetZ(); });
+  stage.addEventListener('dblclick', (e) => { if (!e.target.closest('.gv-tools, .gv-nav, #gv-video')) resetZ(); });
   $('gv-fit').addEventListener('click', resetZ); $('gv-fitw').addEventListener('click', zoomFitWidth); $('gv-actual').addEventListener('click', zoomActual);
 
   const isOpen = () => viewer.classList.contains('open');
+  function renderSideLists(it) {
+    const kc = $('gv-kwchips'); kc.textContent = ''; kc.hidden = OWNER || !(it.keywords || []).length;
+    (it.keywords || []).forEach((k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'gv-kwchip'; b.textContent = k; b.dataset.kw = k; kc.appendChild(b); });
+    const ll = $('gv-linklist'); ll.textContent = ''; ll.hidden = !(it.links || []).length;
+    (it.links || []).forEach((l) => {
+      const row = document.createElement('div'); row.className = 'gv-linkrow';
+      const yt = ytParse(l.url);
+      if (yt) { const pb = document.createElement('button'); pb.type = 'button'; pb.className = 'pill gv-play'; pb.textContent = '▶ Play'; pb.addEventListener('click', () => showVideo(yt)); row.appendChild(pb); }
+      const a = document.createElement('a'); a.href = l.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = (l.label || hostOf(l.url)) + ' ↗'; a.title = l.url; row.appendChild(a);
+      ll.appendChild(row);
+    });
+  }
   function showItem() {
     const it = vList[vIdx]; if (!it) { closeViewer(); return; }
-    resetZ(); vimg.src = srcOf(it, true); vimg.alt = it.title || '';
+    resetZ();
+    const img = hasImage(it);
+    if (img) vimg.src = srcOf(it, true); else vimg.removeAttribute('src');
+    vimg.alt = it.title || ''; showImageMode();
+    const firstYt = !img && (it.links || []).map((l) => ytParse(l.url)).find(Boolean); if (firstYt) showVideo(firstYt);
     $('gv-count').textContent = 'Guide ' + (vIdx + 1) + ' of ' + vList.length;
-    $('gv-title').value = it.title || ''; $('gv-cat').value = it.category || ''; $('gv-notes').value = it.notes || ''; $('gv-link').value = it.link || '';
-    ['gv-title', 'gv-cat', 'gv-notes', 'gv-link'].forEach((id) => {
+    $('gv-title').value = it.title || ''; $('gv-cat').value = it.category || ''; $('gv-notes').value = it.notes || '';
+    $('gv-kw').value = (it.keywords || []).join(', '); $('gv-links').value = linksToText(it.links);
+    ['gv-title', 'gv-cat', 'gv-notes'].forEach((id) => {
       const el = $(id); el.readOnly = !OWNER;
-      el.style.display = (!OWNER && (id === 'gv-link' || !el.value)) ? 'none' : '';
+      el.style.display = (!OWNER && !el.value) ? 'none' : '';
     });
     const nb = $('gv-notes'); nb.style.height = 'auto'; if (!OWNER) nb.style.height = nb.scrollHeight + 'px'; else nb.style.height = '';
-    const a = $('gv-open'), l = safeLink(it.link); a.style.display = l ? '' : 'none'; if (l) a.href = l;
+    renderSideLists(it);
     $('gv-prev').style.display = $('gv-next').style.display = vList.length > 1 ? '' : 'none';
     $('gv-status').textContent = '';
+  }
+  function showImageMode() {
+    const it = vList[vIdx], box = $('gv-video'); box.textContent = ''; box.hidden = true;
+    const img = !!(it && hasImage(it));
+    vimg.style.display = img ? '' : 'none'; $('gv-noimg').hidden = img; $('gv-tools').style.display = img ? '' : 'none';
+  }
+  function showVideo(v) {
+    const it = vList[vIdx], box = $('gv-video'); box.textContent = '';
+    vimg.style.display = 'none'; $('gv-noimg').hidden = true; $('gv-tools').style.display = 'none'; box.hidden = false;
+    const wrap = document.createElement('div'); wrap.className = 'gv-vframe';
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'gv-vplay'; btn.setAttribute('aria-label', 'Play video');
+    if (v.id) { const im = document.createElement('img'); im.alt = ''; im.src = 'https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg'; btn.appendChild(im); }
+    const tri = document.createElement('span'); tri.className = 'gv-vtri'; tri.textContent = '▶'; btn.appendChild(tri);
+    const cap = document.createElement('span'); cap.className = 'gv-vcap'; cap.textContent = 'Click to play. The video loads from YouTube.'; btn.appendChild(cap);
+    btn.addEventListener('click', () => {
+      const f = document.createElement('iframe'); f.src = ytEmbed(v, true); f.title = 'YouTube video'; f.allowFullscreen = true;
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'; f.referrerPolicy = 'strict-origin-when-cross-origin';
+      wrap.textContent = ''; wrap.appendChild(f);
+    });
+    wrap.appendChild(btn); box.appendChild(wrap);
+    if (it && hasImage(it)) {
+      const back = document.createElement('button'); back.type = 'button'; back.className = 'pill gv-vback'; back.textContent = '← Back to image'; back.addEventListener('click', showImageMode); box.appendChild(back);
+    }
   }
   function openViewer(id) {
     vList = filtered(); vIdx = Math.max(0, vList.findIndex((x) => x.id === id));
     viewer.classList.add('open'); document.body.classList.add('viewer-open'); showItem();
   }
-  function closeViewer() { viewer.classList.remove('open'); document.body.classList.remove('viewer-open'); vimg.removeAttribute('src'); }
+  function closeViewer() { viewer.classList.remove('open'); document.body.classList.remove('viewer-open'); vimg.removeAttribute('src'); $('gv-video').textContent = ''; }
   function step(d) { if (vList.length < 2) return; vIdx = (vIdx + d + vList.length) % vList.length; showItem(); }
   $('gv-prev').addEventListener('click', () => step(-1)); $('gv-next').addEventListener('click', () => step(1));
   $('gv-close').addEventListener('click', closeViewer);
-  $('gv-link').addEventListener('input', () => { const l = safeLink($('gv-link').value), a = $('gv-open'); a.style.display = l ? '' : 'none'; if (l) a.href = l; });
+  $('gv-kwchips').addEventListener('click', (e) => {
+    const b = e.target.closest('.gv-kwchip'); if (!b) return;
+    closeViewer(); searchEl.value = b.dataset.kw; fQuery = b.dataset.kw; fCat = ''; render();
+  });
   $('gv-save').addEventListener('click', async () => {
     const it = vList[vIdx]; if (!it || !OWNER) return;
-    const raw = $('gv-link').value.trim(), link = raw ? safeLink(raw) : '';
-    if (raw && !link) { say('The source link must start with http:// or https://', true, $('gv-status')); return; }
+    const pl = parseLinkLines($('gv-links').value);
+    if (pl.bad.length) { say('These links are not valid (they must start with http:// or https://): ' + pl.bad.slice(0, 2).join(' · '), true, $('gv-status')); return; }
     it.title = $('gv-title').value.trim().slice(0, 200) || 'Untitled'; it.category = $('gv-cat').value.trim().slice(0, 60);
-    it.notes = $('gv-notes').value.slice(0, 5000); it.link = link;
-    try { await dbPut(it); render(); say('Saved ✓', false, $('gv-status')); } catch (e) { say('Could not save: ' + (e && e.message || e), true, $('gv-status')); }
+    it.notes = $('gv-notes').value.slice(0, 5000); it.links = pl.links; it.link = pl.links[0] ? pl.links[0].url : ''; it.keywords = cleanKw($('gv-kw').value);
+    fcache.delete(it.id);
+    try { await dbPut(it); render(); renderSideLists(it); say('Saved ✓', false, $('gv-status')); } catch (e) { say('Could not save: ' + (e && e.message || e), true, $('gv-status')); }
   });
   $('gv-del').addEventListener('click', async () => {
     const it = vList[vIdx]; if (!it || !OWNER || !confirm('Delete "' + (it.title || 'this image') + '"? This cannot be undone.')) return;
@@ -2360,6 +2606,19 @@
 
   /* ---------- toolbar, paste, drop ---------- */
   $('guides-add-btn').addEventListener('click', () => $('guides-file').click());
+  $('guides-addlink-btn').addEventListener('click', async () => {
+    if (!OWNER) return;
+    const raw = prompt('Paste the link for this entry (http or https):'); if (!raw) return;
+    const u = safeLink(raw); if (!u) { say('That does not look like a web link (http or https).', true); return; }
+    const it = { id: newId(), title: hostOf(u), category: '', notes: '', link: u, links: [{ url: u, label: '' }], keywords: [], added: Date.now(), noimg: true };
+    try { await dbPut(it); items.push(it); fCat = ''; fQuery = ''; searchEl.value = ''; render(); openViewer(it.id); }
+    catch (e) { say('Could not save: ' + (e && e.message || e), true); return; }
+    if (ytParse(u)) ytTitle(u).then(async (title) => {
+      if (!title || it.title !== hostOf(u)) return;
+      it.title = title; fcache.delete(it.id); try { await dbPut(it); } catch (e) {}
+      render(); if (isOpen() && vList[vIdx] === it && $('gv-title').value === hostOf(u)) $('gv-title').value = title;
+    });
+  });
   $('guides-file').addEventListener('change', (e) => { const f = e.target.files; if (f && f.length) addFiles(f); e.target.value = ''; });
   $('guides-url-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addUrl(e.target.value); } });
   const shown = () => view.style.display !== 'none';
@@ -2383,8 +2642,8 @@
     try {
       const out = [];
       for (const it of items) {
-        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, added: it.added };
-        if (it.url) o.url = it.url; else o.image = await toDataUrl(it.blob);
+        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, links: it.links, keywords: it.keywords, added: it.added };
+        if (it.url) o.url = it.url; else if (it.blob) o.image = await toDataUrl(it.blob); else o.noimg = true;
         out.push(o);
       }
       const blob = new Blob([JSON.stringify({ app: 'tgs-guides', version: 1, items: out })], { type: 'application/json' });
@@ -2403,12 +2662,13 @@
       for (const o of data.items) {
         if (!o || typeof o !== 'object') continue;
         const it = { id: String(o.id || newId()), title: String(o.title || 'Untitled').slice(0, 200), category: String(o.category || '').slice(0, 60),
-                     notes: String(o.notes || '').slice(0, 5000), link: safeLink(o.link), added: Number(o.added) || Date.now() };
+                     notes: String(o.notes || '').slice(0, 5000), link: '', added: Number(o.added) || Date.now() };
+        it.links = cleanLinks(Array.isArray(o.links) && o.links.length ? o.links : (o.link ? [{ url: o.link, label: '' }] : [])); it.link = it.links[0] ? it.links[0].url : ''; it.keywords = cleanKw(o.keywords);
         if (typeof o.url === 'string' && safeLink(o.url)) it.url = safeLink(o.url);
         else if (typeof o.image === 'string' && /^data:image\//.test(o.image)) {
           const blob = await (await fetch(o.image)).blob(); const im = await buildImage(blob, true);
           it.blob = im.blob; it.thumb = im.thumb; it.w = im.w; it.h = im.h;
-        } else continue;
+        } else if (o.noimg === true && it.links.length) { it.noimg = true; } else continue;
         await dbPut(it); const i = items.findIndex((x) => x.id === it.id);
         if (i >= 0) { forget(it.id); items[i] = it; } else items.push(it); n++;
       }
@@ -2427,10 +2687,12 @@
     data.items.forEach((o) => {
       if (!o || typeof o !== 'object') return;
       const it = { id: String(o.id || '').slice(0, 80), title: String(o.title || 'Untitled').slice(0, 200), category: String(o.category || '').slice(0, 60),
-                   notes: String(o.notes || '').slice(0, 5000), link: safeLink(o.link), added: Number(o.added) || 0 };
+                   notes: String(o.notes || '').slice(0, 5000), link: '', added: Number(o.added) || 0 };
       if (!it.id) return;
+      it.links = cleanLinks(Array.isArray(o.links) && o.links.length ? o.links : (o.link ? [{ url: o.link, label: '' }] : [])); it.link = it.links[0] ? it.links[0].url : ''; it.keywords = cleanKw(o.keywords);
       if (okPath(o.file)) { it.file = o.file; if (okPath(o.thumb)) it.thumb = o.thumb; }
       else if (safeLink(o.url)) it.url = safeLink(o.url);
+      else if (o.noimg === true && it.links.length) it.noimg = true;
       else return;
       out.push(it);
     });
@@ -2475,8 +2737,9 @@
       const files = [], man = []; let skipped = 0, bytes = 0;
       for (const it of items) {
         const safe = String(it.id).replace(/[^A-Za-z0-9_-]/g, '_');
-        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, added: it.added };
+        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, links: it.links, keywords: it.keywords, added: it.added };
         if (it.url) o.url = it.url;
+        else if (!it.blob) o.noimg = true;
         else {
           const ext = EXT[it.blob && it.blob.type]; if (!ext) { skipped++; continue; }
           const f = 'images/' + safe + '.' + ext; o.file = f;
@@ -2507,8 +2770,9 @@
       askPersist(); let n = 0, have = 0;
       for (const p of pub) {
         if (items.some((x) => x.id === p.id)) { have++; continue; }
-        const it = { id: p.id, title: p.title, category: p.category, notes: p.notes, link: p.link, added: p.added || Date.now() };
+        const it = { id: p.id, title: p.title, category: p.category, notes: p.notes, link: p.link, links: p.links, keywords: p.keywords, added: p.added || Date.now() };
         if (p.url) it.url = p.url;
+        else if (p.noimg) it.noimg = true;
         else {
           const rb = await fetch(PUB + p.file); if (!rb.ok) continue;
           it.blob = new Blob([await rb.blob()], { type: typeOfPath(p.file) }); it.thumb = it.blob;
@@ -2523,7 +2787,7 @@
   $('guides-owner-exit').addEventListener('click', (e) => { e.preventDefault(); if (window.TGSOwner) window.TGSOwner.set(false); });
   if (window.TGSOwner) window.TGSOwner.onChange((on) => {
     OWNER = on; applyOwnerUI(); closeViewer();
-    Array.from(urlCache.keys()).forEach(forget);
+    Array.from(urlCache.keys()).forEach(forget); fcache.clear();
     items = []; loaded = false; fCat = ''; fQuery = ''; searchEl.value = ''; statusEl.textContent = ''; render();
     if (shown()) window.TGSGuides.show();
   });
@@ -2532,7 +2796,7 @@
   window.TGSGuides = {
     show: async function () {
       if (!loaded) {
-        try { items = OWNER ? await dbAll() : await fetchManifest(); loaded = true; }
+        try { items = (OWNER ? await dbAll() : await fetchManifest()).map(fixItem); loaded = true; fcache.clear(); }
         catch (e) { say(OWNER ? 'Saving images is not available in this browser (' + (e && e.message || e) + ').' : 'Could not load the guides right now. Please try again later.', true); }
       }
       render();
