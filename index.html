@@ -14,7 +14,8 @@
     .header-row { display:flex; align-items:center; gap: 16px; flex-wrap: wrap; justify-content:center; }
     #progressText { font-weight:700; color:var(--d2-gold); font-size: 14px; }
     .side-menu { position: fixed; left: 0; top: 168px; width: 140px; padding: 14px 10px; display: flex; flex-direction: column; gap: 8px; z-index: 900; }
-    .side-menu .class-tab-btn { text-align: center; padding: 9px 12px; }
+    .side-menu .class-tab-btn { text-align: center; padding: 9px 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .tab-ico { height: 18px; width: auto; flex: none; fill: currentColor; }
     .class-tab-btn {
       padding: 5px 12px; border-radius: 4px; border: 1px solid var(--border); background: var(--card);
       color: var(--dim); font-size: 12px; cursor: pointer; font-weight: 600;
@@ -149,6 +150,57 @@
     .brand { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; color: var(--d2-gold); font-weight: 700; font-size: 15px; letter-spacing: 0.3px; white-space: nowrap; }
     .brand img { height: 56px; width: auto; display: block; }
 
+    .class-tab-btn.active:not([data-class]) { border-color: var(--d2-gold); color: var(--d2-gold); }
+
+    /* --- Guides & references --- */
+    [hidden] { display: none !important; }
+    .guides-section { width: 1100px; max-width: 100%; }
+    .guides-owner-bar { border: 1px solid var(--d2-gold); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 12px; color: var(--dim); line-height: 1.5; }
+    .guides-owner-bar b { color: var(--d2-gold); }
+    .guides-owner-bar a { color: var(--d2-gold); margin-left: 6px; }
+    .guides-owner-bar code { color: var(--text); }
+    .guides-section .header { width: 100%; max-width: 100%; }
+    .guides-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+    .guides-toolbar input[type="text"] { padding: 7px 10px; background: #000; border: 1px solid var(--border); color: white; border-radius: 4px; font-size: 12px; }
+    #guides-url-input { flex: 1 1 240px; }
+    #guides-search { flex: 1 1 160px; }
+    .guides-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .guides-chips:empty { display: none; }
+    .g-chip { padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--dim); font-size: 11px; cursor: pointer; }
+    .g-chip.on { border-color: var(--d2-gold); color: var(--d2-gold); }
+    .guides-drop { border: 1px dashed var(--border); border-radius: 6px; padding: 10px; text-align: center; color: var(--dim); font-size: 12px; margin-bottom: 14px; }
+    .guides-section.dragging .guides-drop { border-color: var(--d2-gold); color: var(--d2-gold); }
+    .guides-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+    .g-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; cursor: pointer; }
+    .g-card:hover, .g-card:focus-visible { border-color: var(--d2-gold); outline: none; }
+    .g-thumb { aspect-ratio: 16 / 10; background: #000; overflow: hidden; position: relative; }
+    .g-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .g-thumb.broken img { display: none; }
+    .g-thumb.broken::after { content: 'Image unavailable'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 11px; }
+    .g-meta { padding: 8px 10px; }
+    .g-title { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .g-cat { font-size: 11px; color: var(--dim); min-height: 14px; margin-top: 2px; }
+    .gv { position: fixed; inset: 0; z-index: 2500; background: #050608; display: none; }
+    .gv.open { display: flex; }
+    .gv-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: grab; touch-action: none; min-width: 0; }
+    .gv-stage.grab { cursor: grabbing; }
+    #gv-img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center; user-select: none; -webkit-user-drag: none; }
+    .gv-tools { position: absolute; left: 12px; top: 12px; display: flex; gap: 6px; z-index: 2; cursor: default; }
+    .gv-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 64px; background: rgba(20, 22, 26, 0.85); border: 1px solid var(--border); color: var(--text); font-size: 28px; border-radius: 6px; cursor: pointer; z-index: 2; }
+    .gv-nav:hover { border-color: var(--d2-gold); color: var(--d2-gold); }
+    .gv-prev { left: 12px; }
+    .gv-next { right: 12px; }
+    .gv-side { width: 300px; flex: none; padding: 16px; border-left: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+    .gv-side input, .gv-side textarea { width: 100%; background: #000; border: 1px solid var(--border); color: white; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: inherit; }
+    .gv-side textarea { min-height: 150px; resize: vertical; }
+    .gv-side textarea[readonly] { min-height: 0; overflow: hidden; }
+    .gv-side input[readonly], .gv-side textarea[readonly] { border-color: transparent; background: transparent; padding-left: 0; padding-right: 0; resize: none; }
+    #gv-title[readonly] { font-size: 16px; font-weight: 700; color: var(--d2-gold); }
+    .gv-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .gv-hint { font-size: 11px; color: var(--dim); line-height: 1.4; }
+    body.viewer-open { overflow: hidden; }
+    body.viewer-open #layout-panel { display: none; }
+
     /* --- Header arrangement: one flowing bar that wraps on narrower screens --- */
     .sticky-header .header-row { display: contents; }
     .sticky-header .header-row + .header-row { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; order: 6; margin-left: auto; }
@@ -178,6 +230,15 @@
     body.layout-editing [data-mvblock] { outline: 2px dashed #6f9bff; outline-offset: -2px; cursor: move; touch-action: none; }
     .lay-rz { display: none; position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; background: #6f9bff; border-top-left-radius: 6px; cursor: nwse-resize; z-index: 1600; touch-action: none; }
     body.layout-editing .lay-rz { display: block; }
+    .lay-switch { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--dim); cursor: pointer; user-select: none; position: relative; margin-right: 4px; }
+    .lay-switch input { position: absolute; opacity: 0; pointer-events: none; }
+    .lay-slider { width: 30px; height: 16px; border-radius: 8px; background: #2a2e35; position: relative; transition: background 0.15s; }
+    .lay-slider::after { content: ''; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #888; transition: left 0.15s, background 0.15s; }
+    .lay-switch input:checked + .lay-slider { background: #5a4a1e; }
+    .lay-switch input:checked + .lay-slider::after { left: 16px; background: var(--d2-gold); }
+    .lay-switch input:focus-visible + .lay-slider { outline: 2px solid var(--d2-gold); }
+    .tgs-toast { position: fixed; right: 16px; bottom: 76px; z-index: 3100; background: #14161a; border: 1px solid var(--d2-gold); color: var(--d2-gold); padding: 6px 12px; border-radius: 6px; font-size: 12px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+    .tgs-toast.show { opacity: 1; }
     body.layout-editing .lay-dragging { outline-style: solid !important; z-index: 1500; }
 </style>
 </head>
@@ -208,10 +269,11 @@
 </div>
 
 <nav class="side-menu" id="class-tabs" data-mvblock="sidebar"><span class="lay-rz" title="Resize"></span>
-    <div class="class-tab-btn active" data-class="titan" data-mv="tab-titan">Titan</div>
-    <div class="class-tab-btn" data-class="hunter" data-mv="tab-hunter">Hunter</div>
-    <div class="class-tab-btn" data-class="warlock" data-mv="tab-warlock">Warlock</div>
-    <div class="class-tab-btn" id="wishlist-view-btn" data-mv="tab-wishlist">Weapon Wishlist</div>
+    <div class="class-tab-btn active" data-class="titan" data-mv="tab-titan"><svg class="tab-ico" aria-hidden="true" focusable="false" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m14.839 15.979-13.178-7.609v15.218zm2.322 0 13.178 7.609v-15.218zm5.485-12.175-6.589-3.804-13.178 7.609 13.178 7.609 13.179-7.609zm0 16.784-6.589-3.805-13.178 7.609 13.178 7.608 13.179-7.608-6.59-3.805z"/></svg><span>Titan</span></div>
+    <div class="class-tab-btn" data-class="hunter" data-mv="tab-hunter"><svg class="tab-ico" aria-hidden="true" focusable="false" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m9.055 10.446 6.945-.023-6.948 10.451 6.948-.024-7.412 11.15h-7.045l7.036-10.428h-7.036l7.032-10.422h-7.032l7.507-11.126 6.95-.024zm13.89 0-6.945-10.446 6.95.024 7.507 11.126h-7.032l7.032 10.422h-7.036l7.036 10.428h-7.045l-7.412-11.15 6.948.024-6.948-10.451z"/></svg><span>Hunter</span></div>
+    <div class="class-tab-btn" data-class="warlock" data-mv="tab-warlock"><svg class="tab-ico" aria-hidden="true" focusable="false" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m5.442 23.986 7.255-11.65-2.71-4.322-9.987 15.972zm5.986 0 4.28-6.849-2.717-4.333-6.992 11.182zm7.83-11.611 7.316 11.611h5.426l-10.015-15.972zm-7.26 11.611h8.004l-4.008-6.392zm6.991-11.182-2.703 4.324 4.302 6.858h5.413zm-5.707-.459 2.71-4.331 2.71 4.331-2.703 4.326z"/></svg><span>Warlock</span></div>
+    <div class="class-tab-btn" id="wishlist-view-btn" data-mv="tab-wishlist"><svg class="tab-ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 32"><path d="M57.76 8.704h-2.72v1.056h1.184l0.32 0.32v3.52l-0.768 0.256-23.2 1.088-1.12-1.088h-0.896l-1.76 1.824h-0.416v0.352l-3.168 3.104-1.376 1.152-1.12 0.512-1.696 0.448-1.536 0.096-1.184-0.128-1.12-0.352-1.056-0.576-0.864-0.192-0.864 0.064-0.512 0.16-0.352 0.448-0.224 0.864v0.864l-0.704 0.544-0.384 0.64-0.832 3.328 0.352 1.664 0.608 0.448v0.416l-0.64 0.16-7.808-2.272-0.096-0.736 0.096-1.472 0.288-1.792 0.768-2.432 0.96-2.176 1.248-1.92 1.728-1.952 0.64-0.8 0.192-0.608v-0.8l-0.416-0.736-0.8-0.832-1.184-0.672 0.736-0.736h1.664l0.384-0.416 1.728-0.416 0.48-0.544 0.512-0.672 0.384-0.928 0.192-1.024 0.512-0.64h0.48l0.192-1.312 0.096-0.928h9.408l1.248 1.28h25.184l0.64-0.64h5.6l0.992 1.024v4.16zM24.896 17.76v-1.056l-0.224-0.768-0.48-0.48-0.64-0.224-1.664-0.064h-2.272l-0.64 0.864-0.128 0.704 0.064 0.512 0.224 0.384 0.32 0.384-0.288 0.256-0.48-0.448-0.416-0.704-0.288-1.024-0.128-0.544-0.288 0.032-0.608 0.544-0.48 0.704-0.192 0.96v0.992l0.448 0.896 0.768 0.608 1.312 0.384h1.088l1.28-0.128 1.28-0.352 0.864-0.448 0.8-0.608 0.512-0.608z"></path></svg><span>Weapon Wishlist</span></div>
+    <div class="class-tab-btn" id="guides-view-btn" data-mv="tab-guides"><svg class="tab-ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 51"><g><rect x="21.88" y="21.58" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -10.3502 25.4121)" width="7.23" height="7.23"/><path d="M41.41,32.09L48,25.5l-6.59-6.59V9.59h-9.32L25.5,3l-6.59,6.59H9.59v9.32L3,25.5l6.59,6.59v9.32h9.32L25.5,48l6.59-6.59 h9.32V32.09z M47.15,25.5l-5.74,5.74v-4.23l1.51-1.51l-1.51-1.51v-4.23L47.15,25.5z M27.61,10.19h4.23l8.97,8.97v4.23L27.61,10.19z M34.22,25.2l-8.72,8.72l-8.72-8.72l8.72-8.72L34.22,25.2z M10.19,23.39v-4.23l8.97-8.97h4.23L10.19,23.39z M23.39,40.81h-4.23 l-8.97-8.97v-4.23L23.39,40.81z M40.81,27.61v4.23l-8.97,8.97h-4.23L40.81,27.61z M40.81,10.19v8.12l-8.12-8.12H40.81z M25.5,3.85 l5.74,5.74h-4.23L25.5,8.08l-1.51,1.51h-4.23L25.5,3.85z M10.19,10.19h8.12l-8.12,8.12V10.19z M3.85,25.5l5.74-5.74v4.23L8.08,25.5 l1.51,1.51v4.23L3.85,25.5z M10.19,40.81v-8.12l8.12,8.12H10.19z M25.5,47.15l-5.74-5.74h4.23l1.51,1.51l1.51-1.51h4.23L25.5,47.15 z M32.69,40.81l8.12-8.12v8.12H32.69z"/></g></svg><span>Guides</span></div>
 </nav>
 
 <div id="armor-view">
@@ -233,6 +295,31 @@
   <div id="wishlist-empty" class="empty-state" style="display:none;">No weapons in your wishlist yet — add one above.</div>
 </div>
 
+<div class="guides-section" id="guides-view" style="display:none;">
+  <div class="header" style="margin-top:2rem;">Guides &amp; references</div>
+  <div class="guides-owner-bar owner-only" hidden>
+    <b>Owner mode.</b> You are editing a workspace stored in this browser. Visitors only see what you publish:
+    use <i>Export package</i>, unzip it into your repo (replacing the <code>guides</code> folder) and commit.
+    <a href="#" id="guides-owner-exit">Exit owner mode</a>
+  </div>
+  <div class="guides-toolbar">
+    <button class="pill owner-only" id="guides-add-btn" hidden>+ Add images</button>
+    <input type="file" id="guides-file" accept="image/*" multiple style="display:none;" />
+    <input type="text" class="owner-only" id="guides-url-input" placeholder="…or paste an image link and press Enter" hidden />
+    <input type="text" id="guides-search" placeholder="Search guides..." />
+    <button class="pill owner-only" id="guides-pkg-btn" title="Download a zip to publish on the site" hidden>Export package</button>
+    <button class="pill owner-only" id="guides-export-btn" title="Download one backup file" hidden>Backup</button>
+    <button class="pill owner-only" id="guides-import-btn" title="Restore a backup file" hidden>Import</button>
+    <button class="pill owner-only" id="guides-load-btn" title="Copy the published guides into this workspace" hidden>Load published</button>
+    <input type="file" id="guides-import-file" accept="application/json,.json" style="display:none;" />
+  </div>
+  <div class="guides-chips" id="guides-chips"></div>
+  <div class="modal-status" id="guides-status"></div>
+  <div class="guides-drop owner-only" hidden>Drop images here, or press Ctrl+V to paste a screenshot</div>
+  <div class="guides-grid" id="guides-grid"></div>
+  <div id="guides-empty" class="empty-state" style="display:none;"></div>
+</div>
+
 <p class="footer-note">Data is stored in this browser's local storage on this device. Bonus text is paraphrased from patch notes. Icons are downloaded once from Bungie's API and embedded locally.</p>
 
 <div class="modal-overlay" id="icon-modal">
@@ -247,6 +334,35 @@
     <div class="modal-footer">
       <button class="pill" id="modal-cancel-btn">Cancel</button>
     </div>
+  </div>
+</div>
+
+<div class="gv" id="guides-viewer">
+  <div class="gv-stage" id="gv-stage">
+    <img id="gv-img" alt="" draggable="false" />
+    <div class="gv-tools" id="gv-tools">
+      <button class="pill" id="gv-fit">Fit</button>
+      <button class="pill" id="gv-fitw">Fit width</button>
+      <button class="pill" id="gv-actual">100%</button>
+    </div>
+    <button class="gv-nav gv-prev" id="gv-prev" aria-label="Previous">&#8249;</button>
+    <button class="gv-nav gv-next" id="gv-next" aria-label="Next">&#8250;</button>
+  </div>
+  <div class="gv-side">
+    <div class="modal-title" id="gv-count">Guide</div>
+    <input type="text" id="gv-title" placeholder="Title" />
+    <input type="text" id="gv-cat" list="guides-cats" placeholder="Category (Guide, Mission, Raid, ...)" />
+    <datalist id="guides-cats"></datalist>
+    <textarea id="gv-notes" placeholder="Notes"></textarea>
+    <input type="text" id="gv-link" placeholder="Source link (optional)" />
+    <a id="gv-open" href="#" target="_blank" rel="noopener noreferrer" style="display:none;color:var(--d2-gold);font-size:12px;">Open source link ↗</a>
+    <div class="gv-actions">
+      <button class="pill owner-only" id="gv-save" hidden>Save</button>
+      <button class="pill owner-only" id="gv-del" style="color:var(--danger);" hidden>Delete</button>
+      <button class="pill" id="gv-close">Close</button>
+    </div>
+    <div class="gv-hint">Scroll to zoom · drag to move · double-click to reset · ← → to browse · Esc to close</div>
+    <div class="modal-status" id="gv-status"></div>
   </div>
 </div>
 
@@ -1860,23 +1976,41 @@
   const armorViewEl = document.getElementById('armor-view');
   const wishlistViewEl = document.getElementById('wishlist-view');
   const searchBarEl = document.getElementById('searchBar');
+  const guidesViewEl = document.getElementById('guides-view');
+  const guidesBtnEl = document.getElementById('guides-view-btn');
   let currentView = 'armor';
 
   function showArmorView() {
     currentView = 'armor';
     armorViewEl.style.display = '';
     wishlistViewEl.style.display = 'none';
+    guidesViewEl.style.display = 'none';
     searchBarEl.style.display = '';
     document.getElementById('wishlist-view-btn').classList.remove('active');
+    guidesBtnEl.classList.remove('active');
   }
 
   function showWishlistView() {
     currentView = 'wishlist';
     armorViewEl.style.display = 'none';
     wishlistViewEl.style.display = 'block';
+    guidesViewEl.style.display = 'none';
     searchBarEl.style.display = 'none';
     document.querySelectorAll('.class-tab-btn[data-class]').forEach((t) => t.classList.remove('active'));
     document.getElementById('wishlist-view-btn').classList.add('active');
+    guidesBtnEl.classList.remove('active');
+  }
+
+  function showGuidesView() {
+    currentView = 'guides';
+    armorViewEl.style.display = 'none';
+    wishlistViewEl.style.display = 'none';
+    guidesViewEl.style.display = 'block';
+    searchBarEl.style.display = 'none';
+    document.querySelectorAll('.class-tab-btn[data-class]').forEach((t) => t.classList.remove('active'));
+    document.getElementById('wishlist-view-btn').classList.remove('active');
+    guidesBtnEl.classList.add('active');
+    if (window.TGSGuides) window.TGSGuides.show();
   }
 
   document.querySelectorAll('.class-tab-btn[data-class]').forEach((tab) => {
@@ -1890,6 +2024,8 @@
   document.getElementById('wishlist-view-btn').addEventListener('click', () => {
     showWishlistView();
   });
+
+  guidesBtnEl.addEventListener('click', showGuidesView);
 
   document.getElementById('copy-sync-code-btn').addEventListener('click', () => {
     const code = getOrCreateSyncCode();
@@ -1949,7 +2085,464 @@
   init();
 })();
 </script>
-<div id="layout-panel">
+<script>
+(function () {
+  const KEY = 'tgs-owner', subs = [];
+  let on = false, toastEl = null, toastT = null, clicks = [];
+  try {
+    const q = new URLSearchParams(location.search);
+    if (q.has('owner')) {
+      localStorage.setItem(KEY, q.get('owner') === '0' ? '0' : '1');
+      q.delete('owner');
+      try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q.toString() : '') + location.hash); } catch (e) {}
+    }
+    on = localStorage.getItem(KEY) === '1';
+  } catch (e) {}
+
+  function toast(msg) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'tgs-toast'; document.body.appendChild(toastEl); }
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 2200);
+  }
+  function refresh() {
+    document.body.classList.toggle('owner-on', on);
+    const panel = document.getElementById('layout-panel'); if (panel) panel.hidden = !on;
+    const sw = document.getElementById('owner-switch'); if (sw) sw.checked = on;
+  }
+  function set(v, quiet) {
+    v = !!v; if (v === on) { refresh(); return; }
+    on = v; try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) {}
+    refresh(); subs.forEach((f) => { try { f(on); } catch (e) {} });
+    if (!quiet) toast(on ? 'Owner mode on' : 'Owner mode off');
+  }
+  window.TGSOwner = { get: () => on, set, refresh, onChange: (f) => subs.push(f) };
+
+  // Hidden trigger: five quick clicks on the logo toggle owner mode.
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest || !e.target.closest('.brand')) return;
+    const now = Date.now(); clicks = clicks.filter((t) => now - t < 2500); clicks.push(now);
+    if (clicks.length >= 5) { clicks = []; set(!on); }
+  });
+})();
+</script>
+<script>
+(function () {
+  const DB_NAME = 'tgs-guides', STORE = 'items';
+  const $ = (id) => document.getElementById(id);
+  const view = $('guides-view'), grid = $('guides-grid'), emptyEl = $('guides-empty'), statusEl = $('guides-status'),
+        chipsEl = $('guides-chips'), searchEl = $('guides-search'), viewer = $('guides-viewer'),
+        stage = $('gv-stage'), vimg = $('gv-img');
+  let items = [], loaded = false, dbp = null, fCat = '', fQuery = '';
+  let vList = [], vIdx = 0, z = { s: 1, x: 0, y: 0 }, drag = null, persistAsked = false;
+  const urlCache = new Map();
+  const PUB = 'guides/';
+  let OWNER = !!(window.TGSOwner && window.TGSOwner.get());
+  function applyOwnerUI() { document.querySelectorAll('.owner-only').forEach((el) => { el.hidden = !OWNER; }); }
+  applyOwnerUI();
+
+  /* ---------- storage (IndexedDB) ---------- */
+  function db() {
+    if (!dbp) dbp = new Promise((resolve, reject) => {
+      if (!window.indexedDB) return reject(new Error('IndexedDB is not available'));
+      const r = indexedDB.open(DB_NAME, 1);
+      r.onupgradeneeded = () => r.result.createObjectStore(STORE, { keyPath: 'id' });
+      r.onsuccess = () => resolve(r.result);
+      r.onerror = () => reject(r.error);
+    });
+    return dbp;
+  }
+  function tx(mode, fn) {
+    return db().then((d) => new Promise((resolve, reject) => {
+      const t = d.transaction(STORE, mode);
+      const req = fn(t.objectStore(STORE));
+      t.oncomplete = () => resolve(req && req.result);
+      t.onerror = () => reject(t.error);
+      t.onabort = () => reject(t.error);
+    }));
+  }
+  const dbAll = () => tx('readonly', (s) => s.getAll());
+  const dbPut = (it) => tx('readwrite', (s) => s.put(it));
+  const dbDel = (id) => tx('readwrite', (s) => s.delete(id));
+
+  /* ---------- helpers ---------- */
+  let stT;
+  function say(msg, bad, el) {
+    const t = el || statusEl;
+    t.textContent = msg || ''; t.style.color = bad ? 'var(--danger)' : '';
+    clearTimeout(stT); if (msg) stT = setTimeout(() => { t.textContent = ''; }, 5000);
+  }
+  const newId = () => 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const safeLink = (s) => { try { const u = new URL(String(s || '').trim()); return /^https?:$/.test(u.protocol) ? u.href : ''; } catch (e) { return ''; } };
+  function askPersist() { if (!persistAsked && navigator.storage && navigator.storage.persist) { persistAsked = true; navigator.storage.persist().catch(() => {}); } }
+
+  /* ---------- images ---------- */
+  const canvasBlob = (c, type, q) => new Promise((res) => c.toBlob(res, type, q));
+  async function decode(blob) {
+    if (window.createImageBitmap) { try { return await createImageBitmap(blob); } catch (e) {} }
+    return new Promise((res, rej) => {
+      const u = URL.createObjectURL(blob), im = new Image();
+      im.onload = () => { URL.revokeObjectURL(u); res(im); };
+      im.onerror = () => { URL.revokeObjectURL(u); rej(new Error('decode')); };
+      im.src = u;
+    });
+  }
+  async function scaled(img, w, h, maxW, maxH, type, q) {
+    const k = Math.min(1, maxW / w, maxH / h);
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return canvasBlob(c, type, q);
+  }
+  async function buildImage(file, keepOriginal) {
+    const out = { blob: file, thumb: file, w: 0, h: 0 };
+    let img; try { img = await decode(file); } catch (e) { return out; }
+    const w = img.width || img.naturalWidth, h = img.height || img.naturalHeight;
+    out.w = w; out.h = h;
+    try {
+      if (!keepOriginal && !/gif|svg/.test(file.type) && (Math.max(w, h) > 3200 || file.size > 4 * 1024 * 1024)) {
+        const b = await scaled(img, w, h, 3200, 3200, 'image/webp', 0.92);
+        if (b && b.size < file.size) out.blob = b;
+      }
+      const t = await scaled(img, w, h, 520, 1200, 'image/webp', 0.82);
+      if (t) out.thumb = t;
+    } catch (e) {}
+    if (img.close) img.close();
+    return out;
+  }
+  function srcOf(it, full) {
+    if (it.url) return it.url;
+    if (it.file) return PUB + (full ? it.file : (it.thumb || it.file));
+    const k = urlCache.get(it.id) || {}; urlCache.set(it.id, k);
+    const key = full ? 'full' : 'thumb';
+    if (!k[key]) k[key] = URL.createObjectURL(full ? it.blob : (it.thumb || it.blob));
+    return k[key];
+  }
+  function forget(id) { const k = urlCache.get(id); if (k) { Object.values(k).forEach((u) => URL.revokeObjectURL(u)); urlCache.delete(id); } }
+
+  /* ---------- add ---------- */
+  async function addFiles(files) {
+    if (!OWNER) return;
+    const imgs = Array.from(files).filter((f) => /^image\//.test(f.type));
+    if (!imgs.length) { say('No image files found.', true); return; }
+    say('Adding ' + imgs.length + (imgs.length > 1 ? ' images…' : ' image…'));
+    askPersist(); let n = 0;
+    for (const f of imgs) {
+      try {
+        const im = await buildImage(f, false);
+        const it = { id: newId(), title: (f.name || '').replace(/\.[^.]+$/, '') || 'Untitled', category: '', notes: '', link: '', added: Date.now(), blob: im.blob, thumb: im.thumb, w: im.w, h: im.h };
+        await dbPut(it); items.push(it); n++;
+      } catch (e) { say('Could not save an image: ' + (e && e.message || e), true); }
+    }
+    fCat = ''; render();
+    if (n) say('Added ' + n + (n > 1 ? ' images.' : ' image.'));
+  }
+  async function addUrl(raw) {
+    if (!OWNER) return;
+    const href = safeLink(raw);
+    if (!href) { say('That does not look like a web link (http or https).', true); return; }
+    let title = ''; try { const u = new URL(href); title = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || u.hostname).replace(/\.[^.]+$/, ''); } catch (e) { title = 'Linked image'; }
+    const it = { id: newId(), title: title || 'Linked image', category: '', notes: '', link: '', added: Date.now(), url: href };
+    try { await dbPut(it); items.push(it); fCat = ''; render(); say('Added link.'); $('guides-url-input').value = ''; }
+    catch (e) { say('Could not save: ' + (e && e.message || e), true); }
+  }
+
+  /* ---------- list ---------- */
+  function filtered() {
+    const q = fQuery.trim().toLowerCase();
+    return items.filter((it) => (!fCat || (it.category || '').trim().toLowerCase() === fCat.toLowerCase()) &&
+      (!q || [it.title, it.notes, it.category, it.link].some((v) => (v || '').toLowerCase().includes(q)))).sort((a, b) => b.added - a.added);
+  }
+  function categories() {
+    const m = new Map();
+    items.forEach((it) => { const c = (it.category || '').trim(); if (c) { const k = c.toLowerCase(); if (!m.has(k)) m.set(k, { name: c, n: 0 }); m.get(k).n++; } });
+    return Array.from(m.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }
+  function renderChips() {
+    const cats = categories(); chipsEl.textContent = '';
+    if (!cats.length) { if (fCat) fCat = ''; return; }
+    if (fCat && !cats.some((c) => c.name.toLowerCase() === fCat.toLowerCase())) fCat = '';
+    const mk = (label, val) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'g-chip' + ((val || '').toLowerCase() === fCat.toLowerCase() ? ' on' : ''); b.textContent = label; b.dataset.cat = val; chipsEl.appendChild(b); };
+    mk('All (' + items.length + ')', '');
+    cats.forEach((c) => mk(c.name + ' (' + c.n + ')', c.name));
+    const dl = $('guides-cats'); dl.textContent = '';
+    cats.forEach((c) => { const o = document.createElement('option'); o.value = c.name; dl.appendChild(o); });
+  }
+  function render() {
+    renderChips();
+    const list = filtered(); grid.textContent = '';
+    list.forEach((it) => {
+      const card = document.createElement('div'); card.className = 'g-card'; card.tabIndex = 0; card.dataset.id = it.id;
+      const th = document.createElement('div'); th.className = 'g-thumb';
+      const im = document.createElement('img'); im.loading = 'lazy'; im.alt = it.title || ''; im.src = srcOf(it, false);
+      im.onerror = () => th.classList.add('broken'); th.appendChild(im);
+      const meta = document.createElement('div'); meta.className = 'g-meta';
+      const t = document.createElement('div'); t.className = 'g-title'; t.textContent = it.title || 'Untitled';
+      const c = document.createElement('div'); c.className = 'g-cat'; c.textContent = it.category || '';
+      meta.append(t, c); card.append(th, meta); grid.appendChild(card);
+    });
+    emptyEl.style.display = list.length ? 'none' : 'block';
+    emptyEl.textContent = items.length ? 'No guides match that filter.' : (OWNER ? 'Nothing here yet — add an image sheet above.' : 'No guides have been published yet.');
+  }
+  grid.addEventListener('click', (e) => { const c = e.target.closest('.g-card'); if (c) openViewer(c.dataset.id); });
+  grid.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const c = e.target.closest('.g-card'); if (c) openViewer(c.dataset.id); } });
+  chipsEl.addEventListener('click', (e) => { const b = e.target.closest('.g-chip'); if (!b) return; fCat = b.dataset.cat || ''; render(); });
+  searchEl.addEventListener('input', () => { fQuery = searchEl.value; render(); });
+
+  /* ---------- viewer ---------- */
+  const applyZ = () => { vimg.style.transform = 'translate(' + z.x + 'px,' + z.y + 'px) scale(' + z.s + ')'; };
+  const resetZ = () => { z = { s: 1, x: 0, y: 0 }; applyZ(); };
+  function zoomFitWidth() {
+    const w = vimg.clientWidth, h = vimg.clientHeight; if (!w || !h) return;
+    const s = stage.clientWidth / w; z.s = s; z.x = 0; z.y = Math.max(0, (h * s - stage.clientHeight) / 2); applyZ();
+  }
+  function zoomActual() { const w = vimg.clientWidth; if (!w || !vimg.naturalWidth) return; z = { s: vimg.naturalWidth / w, x: 0, y: 0 }; applyZ(); }
+  stage.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = stage.getBoundingClientRect(), cx = e.clientX - (r.left + r.width / 2), cy = e.clientY - (r.top + r.height / 2);
+    const ns = Math.min(10, Math.max(0.2, z.s * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
+    z.x = cx - (cx - z.x) * (ns / z.s); z.y = cy - (cy - z.y) * (ns / z.s); z.s = ns; applyZ();
+  }, { passive: false });
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || e.target.closest('.gv-tools, .gv-nav')) return;
+    drag = { x: e.clientX, y: e.clientY, ox: z.x, oy: z.y }; stage.setPointerCapture(e.pointerId); stage.classList.add('grab');
+  });
+  stage.addEventListener('pointermove', (e) => { if (!drag) return; z.x = drag.ox + e.clientX - drag.x; z.y = drag.oy + e.clientY - drag.y; applyZ(); });
+  const endDrag = () => { drag = null; stage.classList.remove('grab'); };
+  stage.addEventListener('pointerup', endDrag); stage.addEventListener('pointercancel', endDrag);
+  stage.addEventListener('dblclick', (e) => { if (!e.target.closest('.gv-tools, .gv-nav')) resetZ(); });
+  $('gv-fit').addEventListener('click', resetZ); $('gv-fitw').addEventListener('click', zoomFitWidth); $('gv-actual').addEventListener('click', zoomActual);
+
+  const isOpen = () => viewer.classList.contains('open');
+  function showItem() {
+    const it = vList[vIdx]; if (!it) { closeViewer(); return; }
+    resetZ(); vimg.src = srcOf(it, true); vimg.alt = it.title || '';
+    $('gv-count').textContent = 'Guide ' + (vIdx + 1) + ' of ' + vList.length;
+    $('gv-title').value = it.title || ''; $('gv-cat').value = it.category || ''; $('gv-notes').value = it.notes || ''; $('gv-link').value = it.link || '';
+    ['gv-title', 'gv-cat', 'gv-notes', 'gv-link'].forEach((id) => {
+      const el = $(id); el.readOnly = !OWNER;
+      el.style.display = (!OWNER && (id === 'gv-link' || !el.value)) ? 'none' : '';
+    });
+    const nb = $('gv-notes'); nb.style.height = 'auto'; if (!OWNER) nb.style.height = nb.scrollHeight + 'px'; else nb.style.height = '';
+    const a = $('gv-open'), l = safeLink(it.link); a.style.display = l ? '' : 'none'; if (l) a.href = l;
+    $('gv-prev').style.display = $('gv-next').style.display = vList.length > 1 ? '' : 'none';
+    $('gv-status').textContent = '';
+  }
+  function openViewer(id) {
+    vList = filtered(); vIdx = Math.max(0, vList.findIndex((x) => x.id === id));
+    viewer.classList.add('open'); document.body.classList.add('viewer-open'); showItem();
+  }
+  function closeViewer() { viewer.classList.remove('open'); document.body.classList.remove('viewer-open'); vimg.removeAttribute('src'); }
+  function step(d) { if (vList.length < 2) return; vIdx = (vIdx + d + vList.length) % vList.length; showItem(); }
+  $('gv-prev').addEventListener('click', () => step(-1)); $('gv-next').addEventListener('click', () => step(1));
+  $('gv-close').addEventListener('click', closeViewer);
+  $('gv-link').addEventListener('input', () => { const l = safeLink($('gv-link').value), a = $('gv-open'); a.style.display = l ? '' : 'none'; if (l) a.href = l; });
+  $('gv-save').addEventListener('click', async () => {
+    const it = vList[vIdx]; if (!it || !OWNER) return;
+    const raw = $('gv-link').value.trim(), link = raw ? safeLink(raw) : '';
+    if (raw && !link) { say('The source link must start with http:// or https://', true, $('gv-status')); return; }
+    it.title = $('gv-title').value.trim().slice(0, 200) || 'Untitled'; it.category = $('gv-cat').value.trim().slice(0, 60);
+    it.notes = $('gv-notes').value.slice(0, 5000); it.link = link;
+    try { await dbPut(it); render(); say('Saved ✓', false, $('gv-status')); } catch (e) { say('Could not save: ' + (e && e.message || e), true, $('gv-status')); }
+  });
+  $('gv-del').addEventListener('click', async () => {
+    const it = vList[vIdx]; if (!it || !OWNER || !confirm('Delete "' + (it.title || 'this image') + '"? This cannot be undone.')) return;
+    try {
+      await dbDel(it.id); forget(it.id); items = items.filter((x) => x.id !== it.id); vList.splice(vIdx, 1);
+      if (vIdx >= vList.length) vIdx = 0; render(); showItem();
+    } catch (e) { say('Could not delete: ' + (e && e.message || e), true, $('gv-status')); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { closeViewer(); return; }
+    if (/^(INPUT|TEXTAREA)$/.test((e.target.tagName || ''))) return;
+    if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1);
+  });
+
+  /* ---------- toolbar, paste, drop ---------- */
+  $('guides-add-btn').addEventListener('click', () => $('guides-file').click());
+  $('guides-file').addEventListener('change', (e) => { const f = e.target.files; if (f && f.length) addFiles(f); e.target.value = ''; });
+  $('guides-url-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addUrl(e.target.value); } });
+  const shown = () => view.style.display !== 'none';
+  document.addEventListener('paste', (e) => {
+    if (!OWNER || !shown() || isOpen()) return;
+    if (/^(INPUT|TEXTAREA)$/.test((e.target.tagName || ''))) return;
+    const files = Array.from((e.clipboardData && e.clipboardData.files) || []).filter((f) => /^image\//.test(f.type));
+    if (files.length) { e.preventDefault(); addFiles(files); }
+  });
+  const hasFiles = (e) => OWNER && e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files');
+  view.addEventListener('dragover', (e) => { if (hasFiles(e)) { e.preventDefault(); view.classList.add('dragging'); } });
+  view.addEventListener('dragleave', (e) => { if (!view.contains(e.relatedTarget)) view.classList.remove('dragging'); });
+  view.addEventListener('drop', (e) => { if (!hasFiles(e)) return; e.preventDefault(); view.classList.remove('dragging'); addFiles(e.dataTransfer.files); });
+
+  /* ---------- backup ---------- */
+  const toDataUrl = (blob) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(blob); });
+  $('guides-export-btn').addEventListener('click', async () => {
+    if (!OWNER) return;
+    if (!items.length) { say('Nothing to export yet.', true); return; }
+    say('Preparing backup…');
+    try {
+      const out = [];
+      for (const it of items) {
+        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, added: it.added };
+        if (it.url) o.url = it.url; else o.image = await toDataUrl(it.blob);
+        out.push(o);
+      }
+      const blob = new Blob([JSON.stringify({ app: 'tgs-guides', version: 1, items: out })], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tgs-guides-backup.json';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      say('Exported ' + out.length + ' item' + (out.length === 1 ? '' : 's') + '.');
+    } catch (e) { say('Export failed: ' + (e && e.message || e), true); }
+  });
+  $('guides-import-btn').addEventListener('click', () => $('guides-import-file').click());
+  $('guides-import-file').addEventListener('change', async (e) => {
+    const file = e.target.files && e.target.files[0]; e.target.value = ''; if (!file || !OWNER) return;
+    try {
+      const data = JSON.parse(await file.text());
+      if (!data || data.app !== 'tgs-guides' || !Array.isArray(data.items)) throw new Error('That is not a guides backup file.');
+      say('Importing…'); askPersist(); let n = 0;
+      for (const o of data.items) {
+        if (!o || typeof o !== 'object') continue;
+        const it = { id: String(o.id || newId()), title: String(o.title || 'Untitled').slice(0, 200), category: String(o.category || '').slice(0, 60),
+                     notes: String(o.notes || '').slice(0, 5000), link: safeLink(o.link), added: Number(o.added) || Date.now() };
+        if (typeof o.url === 'string' && safeLink(o.url)) it.url = safeLink(o.url);
+        else if (typeof o.image === 'string' && /^data:image\//.test(o.image)) {
+          const blob = await (await fetch(o.image)).blob(); const im = await buildImage(blob, true);
+          it.blob = im.blob; it.thumb = im.thumb; it.w = im.w; it.h = im.h;
+        } else continue;
+        await dbPut(it); const i = items.findIndex((x) => x.id === it.id);
+        if (i >= 0) { forget(it.id); items[i] = it; } else items.push(it); n++;
+      }
+      render(); say('Imported ' + n + ' item' + (n === 1 ? '' : 's') + '.');
+    } catch (err) { say(err && err.message || 'Could not read that file.', true); }
+  });
+
+  /* ---------- published guides (read by everyone) ---------- */
+  const okPath = (s) => typeof s === 'string' && /^images\/[A-Za-z0-9._-]+$/.test(s);
+  async function fetchManifest() {
+    const r = await fetch(PUB + 'guides.json', { cache: 'no-cache' });
+    if (!r.ok) return [];
+    const data = await r.json();
+    if (!data || !Array.isArray(data.items)) return [];
+    const out = [];
+    data.items.forEach((o) => {
+      if (!o || typeof o !== 'object') return;
+      const it = { id: String(o.id || '').slice(0, 80), title: String(o.title || 'Untitled').slice(0, 200), category: String(o.category || '').slice(0, 60),
+                   notes: String(o.notes || '').slice(0, 5000), link: safeLink(o.link), added: Number(o.added) || 0 };
+      if (!it.id) return;
+      if (okPath(o.file)) { it.file = o.file; if (okPath(o.thumb)) it.thumb = o.thumb; }
+      else if (safeLink(o.url)) it.url = safeLink(o.url);
+      else return;
+      out.push(it);
+    });
+    return out;
+  }
+  const EXT = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif', 'image/svg+xml': 'svg', 'image/avif': 'avif', 'image/bmp': 'bmp' };
+  const TYPE = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml', avif: 'image/avif', bmp: 'image/bmp' };
+  const typeOfPath = (p) => TYPE[(String(p).split('.').pop() || '').toLowerCase()] || 'image/png';
+
+  /* ---------- owner: package for publishing (zip, no compression) ---------- */
+  const crcT = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = crcT[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+  function makeZip(files) {
+    const enc = new TextEncoder(), now = new Date();
+    const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+    const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+    const parts = [], central = []; let offset = 0;
+    files.forEach((f) => {
+      const name = enc.encode(f.name), crc = crc32(f.data), size = f.data.length;
+      const lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+      lh.setUint16(10, dosTime, true); lh.setUint16(12, dosDate, true); lh.setUint32(14, crc, true); lh.setUint32(18, size, true); lh.setUint32(22, size, true);
+      lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), name, f.data);
+      const ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+      ch.setUint16(12, dosTime, true); ch.setUint16(14, dosDate, true); ch.setUint32(16, crc, true); ch.setUint32(20, size, true); ch.setUint32(24, size, true);
+      ch.setUint16(28, name.length, true); ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), name);
+      offset += 30 + name.length + size;
+    });
+    const cdSize = central.reduce((a, b) => a + b.length, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true); end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, new Uint8Array(end.buffer)], { type: 'application/zip' });
+  }
+  $('guides-pkg-btn').addEventListener('click', async () => {
+    if (!OWNER) return;
+    if (!items.length) { say('Nothing to export yet.', true); return; }
+    say('Building the package…');
+    try {
+      const files = [], man = []; let skipped = 0, bytes = 0;
+      for (const it of items) {
+        const safe = String(it.id).replace(/[^A-Za-z0-9_-]/g, '_');
+        const o = { id: it.id, title: it.title, category: it.category, notes: it.notes, link: it.link, added: it.added };
+        if (it.url) o.url = it.url;
+        else {
+          const ext = EXT[it.blob && it.blob.type]; if (!ext) { skipped++; continue; }
+          const f = 'images/' + safe + '.' + ext; o.file = f;
+          files.push({ name: 'guides/' + f, data: new Uint8Array(await it.blob.arrayBuffer()) });
+          if (it.thumb && it.thumb !== it.blob && EXT[it.thumb.type]) {
+            const t = 'images/' + safe + '.thumb.' + EXT[it.thumb.type]; o.thumb = t;
+            files.push({ name: 'guides/' + t, data: new Uint8Array(await it.thumb.arrayBuffer()) });
+          }
+        }
+        man.push(o);
+      }
+      files.unshift({ name: 'guides/guides.json', data: new TextEncoder().encode(JSON.stringify({ version: 1, items: man }, null, 1)) });
+      files.forEach((f) => { bytes += f.data.length; });
+      const blob = makeZip(files);
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tgs-guides-publish.zip';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      say('Package ready: ' + man.length + ' guide' + (man.length === 1 ? '' : 's') + ', ' + (bytes / 1048576).toFixed(1) + ' MB' + (skipped ? ' (' + skipped + ' skipped: unsupported image type)' : '') + '. Unzip it into your repo and commit.');
+    } catch (e) { say('Could not build the package: ' + (e && e.message || e), true); }
+  });
+
+  /* ---------- owner: copy the published guides into the workspace ---------- */
+  $('guides-load-btn').addEventListener('click', async () => {
+    if (!OWNER) return;
+    say('Loading the published guides…');
+    try {
+      const pub = await fetchManifest();
+      if (!pub.length) { say('Nothing has been published yet.', true); return; }
+      askPersist(); let n = 0, have = 0;
+      for (const p of pub) {
+        if (items.some((x) => x.id === p.id)) { have++; continue; }
+        const it = { id: p.id, title: p.title, category: p.category, notes: p.notes, link: p.link, added: p.added || Date.now() };
+        if (p.url) it.url = p.url;
+        else {
+          const rb = await fetch(PUB + p.file); if (!rb.ok) continue;
+          it.blob = new Blob([await rb.blob()], { type: typeOfPath(p.file) }); it.thumb = it.blob;
+          if (p.thumb) { const rt = await fetch(PUB + p.thumb); if (rt.ok) it.thumb = new Blob([await rt.blob()], { type: typeOfPath(p.thumb) }); }
+          else { const im = await buildImage(it.blob, true); it.thumb = im.thumb; it.w = im.w; it.h = im.h; }
+        }
+        await dbPut(it); items.push(it); n++;
+      }
+      render(); say('Loaded ' + n + ' guide' + (n === 1 ? '' : 's') + (have ? ' (' + have + ' already in your workspace)' : '') + '.');
+    } catch (e) { say('Could not load the published guides: ' + (e && e.message || e), true); }
+  });
+  $('guides-owner-exit').addEventListener('click', (e) => { e.preventDefault(); if (window.TGSOwner) window.TGSOwner.set(false); });
+  if (window.TGSOwner) window.TGSOwner.onChange((on) => {
+    OWNER = on; applyOwnerUI(); closeViewer();
+    Array.from(urlCache.keys()).forEach(forget);
+    items = []; loaded = false; fCat = ''; fQuery = ''; searchEl.value = ''; statusEl.textContent = ''; render();
+    if (shown()) window.TGSGuides.show();
+  });
+
+  /* ---------- hook for the tab ---------- */
+  window.TGSGuides = {
+    show: async function () {
+      if (!loaded) {
+        try { items = OWNER ? await dbAll() : await fetchManifest(); loaded = true; }
+        catch (e) { say(OWNER ? 'Saving images is not available in this browser (' + (e && e.message || e) + ').' : 'Could not load the guides right now. Please try again later.', true); }
+      }
+      render();
+    }
+  };
+})();
+</script>
+
+<div id="layout-panel" hidden>
+  <label class="lay-switch" title="Owner mode"><input type="checkbox" id="owner-switch" /><span class="lay-slider"></span><span>Owner</span></label>
   <span class="lay-hint" id="layout-hint">Drag the header, the side menu, or any element inside them. Resize a block from its blue corner.</span>
   <button class="pill lay-extra" id="layout-reset">Reset</button>
   <button class="pill lay-extra" id="layout-import">Import</button>
@@ -2000,6 +2593,8 @@
     if (!v) save();
   }
   document.getElementById('layout-toggle').addEventListener('click', () => setEditing(!editing));
+  document.getElementById('owner-switch').addEventListener('change', (e) => { if (window.TGSOwner) window.TGSOwner.set(e.target.checked); });
+  if (window.TGSOwner) window.TGSOwner.onChange((on) => { if (!on && editing) setEditing(false); });
 
   document.addEventListener('click', (e) => {
     if (editing && !e.target.closest('#layout-panel')) { e.preventDefault(); e.stopPropagation(); }
@@ -2090,6 +2685,7 @@
   });
 
   paintAll();
+  if (window.TGSOwner) window.TGSOwner.refresh();
 })();
 </script>
 </body>
