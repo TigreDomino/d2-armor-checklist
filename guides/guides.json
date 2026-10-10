@@ -1,0 +1,1001 @@
+{
+ "version": 1,
+ "items": [
+  {
+   "id": "gmv2vtlwgm5cfe",
+   "title": "Desolation",
+   "category": "map",
+   "notes": "Map for the Desolation (opening) encounter of Deep Stone Crypt",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "dsc deep stone crypt desolation"
+   ],
+   "added": 1791666244384,
+   "file": "images/gmv2vtlwgm5cfe.webp",
+   "thumb": "images/gmv2vtlwgm5cfe.thumb.webp"
+  },
+  {
+   "id": "gmv2vu13v9tyb9",
+   "title": "Labyrinth",
+   "category": "map",
+   "notes": "Map for the labyrinth part of the king's fall raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "Labyrinth puzzle chest secret king's fal"
+   ],
+   "added": 1791666264091,
+   "file": "images/gmv2vu13v9tyb9.jpg",
+   "thumb": "images/gmv2vu13v9tyb9.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1eg3en8m",
+   "title": "Vault",
+   "category": "map",
+   "notes": "map for the vault part of the zero hour exotic mission",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "vault zero hour"
+   ],
+   "added": 1791666264472,
+   "file": "images/gmv2vu1eg3en8m.webp",
+   "thumb": "images/gmv2vu1eg3en8m.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1fysdr6y",
+   "title": "Erebus",
+   "category": "map",
+   "notes": "map for the erebus (1st) encounter for the shattered throne dungeon",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "st shattered throne erebus"
+   ],
+   "added": 1791666264526,
+   "file": "images/gmv2vu1fysdr6y.png",
+   "thumb": "images/gmv2vu1fysdr6y.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1gobuype",
+   "title": "Aquisition encounter",
+   "category": "map",
+   "notes": "map for aquisition (1st) for the vow of the disciple raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "vod vow of the disciple aquisition"
+   ],
+   "added": 1791666264552,
+   "file": "images/gmv2vu1gobuype.png",
+   "thumb": "images/gmv2vu1gobuype.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1vhrhnxg",
+   "title": "Wall of wishes",
+   "category": "map",
+   "notes": "wish wall guide for checkpoints and rewards",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "wish wall last lw"
+   ],
+   "added": 1791666265085,
+   "file": "images/gmv2vu1vhrhnxg.jpg",
+   "thumb": "images/gmv2vu1vhrhnxg.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1w6y6rb6",
+   "title": "Exhibition encounter",
+   "category": "map",
+   "notes": "map for the exhibition encounter (3rd) for the vow of the disciple raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "exhibition vod vow of the disciple"
+   ],
+   "added": 1791666265110,
+   "file": "images/gmv2vu1w6y6rb6.jpg",
+   "thumb": "images/gmv2vu1w6y6rb6.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1wlxspjj",
+   "title": "operation seraph shield puzzle",
+   "category": "map",
+   "notes": "",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "seraph shield operation"
+   ],
+   "added": 1791666265125,
+   "file": "images/gmv2vu1wlxspjj.png",
+   "thumb": "images/gmv2vu1wlxspjj.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1x76lqq7",
+   "title": "Tunnels",
+   "category": "map",
+   "notes": "tunnel encounter map",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "pit of heresy moon poh"
+   ],
+   "added": 1791666265147,
+   "file": "images/gmv2vu1x76lqq7.jpg",
+   "thumb": "images/gmv2vu1x76lqq7.thumb.webp"
+  },
+  {
+   "id": "gmv2vu1xvhs6zm",
+   "title": "The Harrow",
+   "category": "map",
+   "notes": "pit of heresy map",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "pit of heresy poh moon"
+   ],
+   "added": 1791666265171,
+   "file": "images/gmv2vu1xvhs6zm.png",
+   "thumb": "images/gmv2vu1xvhs6zm.thumb.webp"
+  },
+  {
+   "id": "gmv2wcbr9unpmb",
+   "title": "Dreaming city all cat locations",
+   "category": "Guide",
+   "notes": "guide for finding all dreaming city cat statue locations",
+   "link": "https://www.shacknews.com/article/107348/all-cat-locations-in-the-dreaming-city-in-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/107348/all-cat-locations-in-the-dreaming-city-in-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "dreaming city cat"
+   ],
+   "added": 1791667117701,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2wdzrygu9ne",
+   "title": "Guide for obtaining Wish-ender",
+   "category": "Guide",
+   "notes": "Guide for obtaining the wish ender exotic bow",
+   "link": "https://www.polygon.com/destiny-2-forsaken-guide/2018/10/8/17907160/wish-ender-exotic-bow-querim-eriviks-xavoth",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-forsaken-guide/2018/10/8/17907160/wish-ender-exotic-bow-querim-eriviks-xavoth",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "wish ender shattered throne st"
+   ],
+   "added": 1791667195486,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2wgvu8lgbp6",
+   "title": "Last wish raid guide",
+   "category": "Guide",
+   "notes": "Guide for the last wish raid",
+   "link": "https://www.pcgamesn.com/destiny-2/forsaken-last-wish-raid-guide",
+   "links": [
+    {
+     "url": "https://www.pcgamesn.com/destiny-2/forsaken-last-wish-raid-guide",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "last wish lw"
+   ],
+   "added": 1791667330352,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2whn6c4bm9o",
+   "title": "All 5 Corrupted Egg Locations in Last Wish Raid [Destiny 2 Forsaken]",
+   "category": "Guide",
+   "notes": "Guide for finding the corrupted eggs inside the last wish raid",
+   "link": "https://www.youtube.com/watch?v=81XxH2E-RsE",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=81XxH2E-RsE",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "last wish lw egg"
+   ],
+   "added": 1791667365780,
+   "noimg": true
+  },
+  {
+   "id": "gmv2wj48kkaera",
+   "title": "Aphelion's Rest - All Corrupted Eggs & Lore (Ascendant Challenge #1/Ouroborea)",
+   "category": "Guide",
+   "notes": "Guide for completing aphelion's rest in the dreaming city",
+   "link": "https://www.youtube.com/watch?v=CxzxJlvZz8k",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=CxzxJlvZz8k",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "egg dreaming city aphelion"
+   ],
+   "added": 1791667434548,
+   "noimg": true
+  },
+  {
+   "id": "gmv2wkbzjiymrq",
+   "title": "Destiny 2 - ALL 40 CORRUPTED EGG LOCATIONS!",
+   "category": "Guide",
+   "notes": "Guide for finding all 40 corrupted eggs inside the dreaming city",
+   "link": "https://www.youtube.com/watch?v=ytetLbDoy6Q&t=15s",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=ytetLbDoy6Q&t=15s",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "egg dreaming city"
+   ],
+   "added": 1791667491247,
+   "noimg": true
+  },
+  {
+   "id": "gmv2wlkdsuttt5",
+   "title": "Labyrinth",
+   "category": "map",
+   "notes": "Map for the labyrinth encounter of pit of heresy dungeon (right before boss)",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "pit of heresy poh labyrinth"
+   ],
+   "added": 1791667548784,
+   "file": "images/gmv2wlkdsuttt5.png",
+   "thumb": "images/gmv2wlkdsuttt5.thumb.webp"
+  },
+  {
+   "id": "gmv2wo3fzp5xn9",
+   "title": "Riven of a Thousand Voices",
+   "category": "map",
+   "notes": "Guide to identify the various symbols and locations to complete the riven of a thousand voices encounters on the last wish raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "last wish lw riven"
+   ],
+   "added": 1791667666799,
+   "file": "images/gmv2wo3fzp5xn9.jpg",
+   "thumb": "images/gmv2wo3fzp5xn9.thumb.webp"
+  },
+  {
+   "id": "gmv2wsq6mb0ime",
+   "title": "Vow of the disciple final chest",
+   "category": "map",
+   "notes": "map to vaguely identify the locations of the points for obtaining an additional red border chest in the vow of the disciple raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "vow of the disciple vod final chest"
+   ],
+   "added": 1791667882894,
+   "file": "images/gmv2wsq6mb0ime.png",
+   "thumb": "images/gmv2wsq6mb0ime.thumb.webp"
+  },
+  {
+   "id": "gmv2wv4dvp21pn",
+   "title": "Destiny 2: Full Duality Dungeon Guide & Secret Memory and Chest Locations",
+   "category": "Guide",
+   "notes": "Guide for the entire duality dungeon",
+   "link": "https://www.youtube.com/watch?v=WniU18Fuo4k",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=WniU18Fuo4k",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "Duality"
+   ],
+   "added": 1791667994611,
+   "noimg": true
+  },
+  {
+   "id": "gmv2wx50qes75n",
+   "title": "vow of the disciple raid symbols",
+   "category": "Guide",
+   "notes": "spreadsheet of the callouts for the vow of the disciple raid",
+   "link": "",
+   "links": [],
+   "keywords": [
+    "vod vow of the disciple"
+   ],
+   "added": 1791668088746,
+   "file": "images/gmv2wx50qes75n.jpg",
+   "thumb": "images/gmv2wx50qes75n.thumb.webp"
+  },
+  {
+   "id": "gmv2wz5jd8mxgh",
+   "title": "Prison Warlords Ruin",
+   "category": "Guide",
+   "notes": "Guide for escaping the prison (after 1st) encounter in the warlords ruin dungeon",
+   "link": "https://imgur.com/a/4thjXAo",
+   "links": [
+    {
+     "url": "https://imgur.com/a/4thjXAo",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "warlords ruin wr prison"
+   ],
+   "added": 1791668182730,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2x1jk5f7ehi",
+   "title": "Guide for the extra chest in King's fall",
+   "category": "Guide",
+   "notes": "Guide for the steps needed to activate the extra chest in the kings fall raid",
+   "link": "https://www.shacknews.com/article/132062/destiny-2-oryx-chest-symbols",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/132062/destiny-2-oryx-chest-symbols",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "kings fall kf"
+   ],
+   "added": 1791668294213,
+   "noimg": true
+  },
+  {
+   "id": "gmv2x3pkm6mfnt",
+   "title": "Lens Director",
+   "category": "Tool",
+   "notes": "Tool to help with the lens (1st) encounter of the sundered doctrine dungeon",
+   "link": "https://www.forced-to-wipe.com/lens-director",
+   "links": [
+    {
+     "url": "https://www.forced-to-wipe.com/lens-director",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "sundered doctrine sd"
+   ],
+   "added": 1791668395318,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2x5ygoml9fx",
+   "title": "Vesper's Solver",
+   "category": "Tool",
+   "notes": "Tool to help resolve the mathemathical problems needed to progress inside the Icebreaker catalyst quest",
+   "link": "https://crowsnest.me/vespers.html",
+   "links": [
+    {
+     "url": "https://crowsnest.me/vespers.html",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "vesper's host vh icebreaker"
+   ],
+   "added": 1791668500152,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xa4cvyq2pn",
+   "title": "Pit of Heresy guide",
+   "category": "Guide",
+   "notes": "Guide for the pit of heresy dungeon ",
+   "link": "https://www.shacknews.com/article/114869/pit-of-heresy-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/114869/pit-of-heresy-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "poh pit of heresy"
+   ],
+   "added": 1791668694415,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xcw59l17p0",
+   "title": "Guide for Warlords Ruin",
+   "category": "Guide",
+   "notes": "Guide for the warlords ruin dungeon",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/23985733/warlords-ruin-dungeon-walkthrough-cell-puzzle-solution-secret-chest-locations/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/23985733/warlords-ruin-dungeon-walkthrough-cell-puzzle-solution-secret-chest-locations/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "warlords ruin wr"
+   ],
+   "added": 1791668823741,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xeqolkzq2t",
+   "title": "Guide for Equilibrium",
+   "category": "Guide",
+   "notes": "Guide for the equilibrium dungeon",
+   "link": "https://www.shacknews.com/article/147168/how-to-complete-the-equilibrium-dungeon-in-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/147168/how-to-complete-the-equilibrium-dungeon-in-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "equilibrium"
+   ],
+   "added": 1791668909973,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xgh13x08ov",
+   "title": "Guide for Sundered Doctrine",
+   "category": "Guide",
+   "notes": "Guide for the sundered doctrine dungeon",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/521312/sundered-doctrine-dungeon-guide-walkthrough-encounter-symbols/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/521312/sundered-doctrine-dungeon-guide-walkthrough-encounter-symbols/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "sd sundered doctrine"
+   ],
+   "added": 1791668990775,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xhsbwks10h",
+   "title": "Guide for vesper's host",
+   "category": "Guide",
+   "notes": "Guide for the vespers host dungeon",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/465662/vespers-host-dungeon-guide-walkthrough-corrupted-puppeteer/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/465662/vespers-host-dungeon-guide-walkthrough-corrupted-puppeteer/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "vespers host vh"
+   ],
+   "added": 1791669052076,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xj2d3jbmlm",
+   "title": "Guide for Ghost of the Deep",
+   "category": "Guide",
+   "notes": "Guide for the ghost of the deep dungeon",
+   "link": "https://www.shacknews.com/article/135676/ghosts-of-the-deep-dungeon-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/135676/ghosts-of-the-deep-dungeon-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "ghost of the deep gd"
+   ],
+   "added": 1791669111735,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xkd7ch6yi2",
+   "title": "Guide for spire of the watcher",
+   "category": "Guide",
+   "notes": "Guide for the spire of the watcher dungeon",
+   "link": "https://www.polygon.com/destiny-2-witch-queen-guide/23505057/spire-of-the-watcher-dungeon-boss-bonus-chest-locations-akelous-persys/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-witch-queen-guide/23505057/spire-of-the-watcher-dungeon-boss-bonus-chest-locations-akelous-persys/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "spire of the watcher sw"
+   ],
+   "added": 1791669172440,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xluxmwif0h",
+   "title": "Guide for grasp of avarice",
+   "category": "Guide",
+   "notes": "Guide for the grasp of avarice dungeon",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/22823677/grasp-of-avarice-burdened-by-riches-puzzle-escorch-cannons-ncoutner-boss-traps-gjallarhorn/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/22823677/grasp-of-avarice-burdened-by-riches-puzzle-escorch-cannons-ncoutner-boss-traps-gjallarhorn/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "grasp of avarice goa"
+   ],
+   "added": 1791669242074,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xn26vsd4d0",
+   "title": "Guide for prophecy",
+   "category": "Guide",
+   "notes": "guide for the prophecy dungeon",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/2020/6/12/21287108/prophecy-dungeon-season-arrivals-encounter-boss-puzzle-kell-echo-centurion-phalanx/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/2020/6/12/21287108/prophecy-dungeon-season-arrivals-encounter-boss-puzzle-kell-echo-centurion-phalanx/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "prophecy"
+   ],
+   "added": 1791669298135,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xo9t13xqgw",
+   "title": "Guide for shattered throne",
+   "category": "Guide",
+   "notes": "Guide for the shattered throne dungeon",
+   "link": "https://www.polygon.com/destiny-2-forsaken-guide/2018/10/8/17912106/shattered-throne-dungeon-symbols-vorgeth-dul-incaru/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-forsaken-guide/2018/10/8/17912106/shattered-throne-dungeon-symbols-vorgeth-dul-incaru/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "shattered throne st"
+   ],
+   "added": 1791669354661,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xpw5ubk9e9",
+   "title": "Guide for garden of salvation",
+   "category": "Guide",
+   "notes": "Guide for the garden of salvation raid",
+   "link": "https://www.shacknews.com/article/114369/garden-of-salvation-raid-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/114369/garden-of-salvation-raid-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "garden of salvation gos"
+   ],
+   "added": 1791669430290,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xttf61cxde",
+   "title": "Guide for the Divinity trace rifle",
+   "category": "Guide",
+   "notes": "Guide to obtain the divinity trace rifle in the garden of salvation raid",
+   "link": "https://www.youtube.com/watch?v=2IQ6M43gEus",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=2IQ6M43gEus",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "divinity gos garden of salvation"
+   ],
+   "added": 1791669613362,
+   "noimg": true
+  },
+  {
+   "id": "gmv2xw22nkphoz",
+   "title": "Guide for Deep Stone Crypt",
+   "category": "Guide",
+   "notes": "Guide for the deep stone crypt raid",
+   "link": "https://www.shacknews.com/article/121651/deep-stone-crypt-raid-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/121651/deep-stone-crypt-raid-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "dsc deep stone crypt"
+   ],
+   "added": 1791669717887,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xxhmk07ahe",
+   "title": "Guide for Vow of the Disciple",
+   "category": "Guide",
+   "notes": "Guide for the vow of the disciple raid",
+   "link": "https://www.polygon.com/destiny-2-witch-queen-guide/22965198/vow-of-the-disciple-raid-boat-symbols-acquisition-caretaker-exhibition-upended-summit-rhulk/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-witch-queen-guide/22965198/vow-of-the-disciple-raid-boat-symbols-acquisition-caretaker-exhibition-upended-summit-rhulk/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "vow of the disciple vod"
+   ],
+   "added": 1791669784700,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2xzidw35u5s",
+   "title": "Guide for Kings Fall",
+   "category": "Guide",
+   "notes": "Guide for the kings fall raid",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/23331359/kings-fall-raid-walkthrough-destiny-2-redux-warpriest-golgoroth-oryx-daughters-totem/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/23331359/kings-fall-raid-walkthrough-destiny-2-redux-warpriest-golgoroth-oryx-daughters-totem/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "kings fall kf"
+   ],
+   "added": 1791669878996,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y0uoy4e5lp",
+   "title": "Guide for Root of Nightmares",
+   "category": "Guide",
+   "notes": "Guide for the root of nightmares raid",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/23640695/root-nightmares-raid-walkthrough-nezarec-boss-fight/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/23640695/root-nightmares-raid-walkthrough-nezarec-boss-fight/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "root of nightmares ron"
+   ],
+   "added": 1791669941602,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y2byy0zknn",
+   "title": "Guide for Crota's End",
+   "category": "Guide",
+   "notes": "Guide for the crotas end raid",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/23859673/crotas-end-raid-walkthrough/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/23859673/crotas-end-raid-walkthrough/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "crotas end ce"
+   ],
+   "added": 1791670010650,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y3hyhg1or4",
+   "title": "Guide for Desert Perpetual (normal)",
+   "category": "Guide",
+   "notes": "Guide for the normal version of the desert perpetual raid",
+   "link": "https://www.shacknews.com/article/145172/the-desert-perpetual-raid-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/145172/the-desert-perpetual-raid-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "desert perpetual dp norma"
+   ],
+   "added": 1791670065065,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y5uyz3eddg",
+   "title": "Guide for Desert Perpetual (Epic)",
+   "category": "Guide",
+   "notes": "Guide for the epic version of desert perpetual raid",
+   "link": "https://www.ign.com/wikis/destiny-2/Epic_Desert_Perpetual_Raid_Guide",
+   "links": [
+    {
+     "url": "https://www.ign.com/wikis/destiny-2/Epic_Desert_Perpetual_Raid_Guide",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "desert perpetual dp epic"
+   ],
+   "added": 1791670175243,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y7h2y1npty",
+   "title": "Guide for Vault of Glass",
+   "category": "Guide",
+   "notes": "Guide for the vault of glass raid",
+   "link": "https://www.shacknews.com/article/124508/vault-of-glass-raid-guide-destiny-2",
+   "links": [
+    {
+     "url": "https://www.shacknews.com/article/124508/vault-of-glass-raid-guide-destiny-2",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "vault of glass vog"
+   ],
+   "added": 1791670250554,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2y8py8tyj72",
+   "title": "Guide for Salvation's Edge",
+   "category": "Guide",
+   "notes": "Guide for the salvations edge raid",
+   "link": "https://www.polygon.com/destiny-2-guide-walkthrough/24175263/salvations-edge-raid-steps-encounters-witness-boss-fight-how-to-beat/",
+   "links": [
+    {
+     "url": "https://www.polygon.com/destiny-2-guide-walkthrough/24175263/salvations-edge-raid-steps-encounters-witness-boss-fight-how-to-beat/",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "salvations edge se"
+   ],
+   "added": 1791670308704,
+   "icon": "link",
+   "noimg": true
+  },
+  {
+   "id": "gmv2yc6n3tomez",
+   "title": "Guide for Presage and Dead's Man Tale",
+   "category": "Guide",
+   "notes": "Guide for the presage mission and how to obtain the dead's man tale exotic",
+   "link": "https://www.youtube.com/watch?v=7nR80zj9vBM",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=7nR80zj9vBM",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "dmt presage deads man tale"
+   ],
+   "added": 1791670470303,
+   "noimg": true
+  },
+  {
+   "id": "gmv2ygovo7x7r4",
+   "title": "Guide for Starcrossed and the Wishkeeper",
+   "category": "Guide",
+   "notes": "Guide for the starcrossed exotic mission and the wishkeeper exotic",
+   "link": "https://www.youtube.com/watch?v=48J8ytRwf5I",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=48J8ytRwf5I",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "wish keeper starcrossed"
+   ],
+   "added": 1791670680564,
+   "noimg": true
+  },
+  {
+   "id": "gmv2yisfd71pxw",
+   "title": "Guide for Encore and Choir of One",
+   "category": "Guide",
+   "notes": "Guide for the encore exotic mission and how to obrain the choir of one exotic",
+   "link": "https://www.youtube.com/watch?v=ieQR0luwPG4&t=173s",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=ieQR0luwPG4&t=173s",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "Encore choir of one"
+   ],
+   "added": 1791670778473,
+   "noimg": true
+  },
+  {
+   "id": "gmv2ykcis0xc6n",
+   "title": "Guide for Avalon and Vexcalibur",
+   "category": "Guide",
+   "notes": "Guide for the avalon exotic mission and vexcalibur exotic",
+   "link": "https://www.youtube.com/watch?v=T87lrWTW4JE",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=T87lrWTW4JE",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "vexcalibur avalon"
+   ],
+   "added": 1791670851172,
+   "noimg": true
+  },
+  {
+   "id": "gmv2ylpp4pki8o",
+   "title": "Guide for Derealize and the Barrow-Dyad",
+   "category": "Guide",
+   "notes": "Guide for the derealize exotic mission and the barrow-dyad exotic",
+   "link": "https://www.youtube.com/watch?v=5lm-rX6zexk&pp=ygUPZGVyZWFsaXplIGd1aWRl0gcJCTcMAYcqIYzv",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=5lm-rX6zexk&pp=ygUPZGVyZWFsaXplIGd1aWRl0gcJCTcMAYcqIYzv",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "barrow dyad derealize"
+   ],
+   "added": 1791670914904,
+   "noimg": true
+  },
+  {
+   "id": "gmv2yni9a9b9x3",
+   "title": "Guide for Kell's Fall and Slayer's Fang",
+   "category": "Guide",
+   "notes": "Guide for the kells fall exotic mission and the slayer fang exotic",
+   "link": "https://www.youtube.com/watch?v=QxZRZHDzFAY&t=147s",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=QxZRZHDzFAY&t=147s",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "slayers fang kells fall"
+   ],
+   "added": 1791670998574,
+   "noimg": true
+  },
+  {
+   "id": "gmv2ypchtb8ark",
+   "title": "Guide for Heliostat and the Wolfsbane",
+   "category": "Guide",
+   "notes": "Guide for the Heliostat exotic mission and the wolfsbane exotic",
+   "link": "https://www.youtube.com/watch?v=97CXobzNtg8",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=97CXobzNtg8",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "wolfsbane heliostat"
+   ],
+   "added": 1791671084417,
+   "noimg": true
+  },
+  {
+   "id": "gmv2yqyahw8lv1",
+   "title": "Guide for Operation: Seraph Shield and Revision Zero",
+   "category": "Guide",
+   "notes": "Guide for the operation seraph shield exotic mission and obtaining the revision zero exotic",
+   "link": "https://www.youtube.com/watch?v=6vEVAtu0A1c",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=6vEVAtu0A1c",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "seraph shield revision zero"
+   ],
+   "added": 1791671159321,
+   "noimg": true
+  },
+  {
+   "id": "gmv2ytdajlqxpm",
+   "title": "Guide for Vox Obscura and Dead Messenger",
+   "category": "Guide",
+   "notes": "Guide for the vox obscura exotic mission and the dead messenger exotic",
+   "link": "https://www.youtube.com/watch?v=uvniMKBrH4o&t=144s",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=uvniMKBrH4o&t=144s",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "dead messenger vox obscura"
+   ],
+   "added": 1791671272075,
+   "noimg": true
+  },
+  {
+   "id": "gmv2yvbcwft0u7",
+   "title": "Guide for Zero Hour and Outbreak Perfected",
+   "category": "Guide",
+   "notes": "Guide for the zero hour exotic mission and the outbreak perfected exotic",
+   "link": "https://www.youtube.com/watch?v=S-7J5Kzc5mg&t=193s",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=S-7J5Kzc5mg&t=193s",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "zeo hour outbreak perfected"
+   ],
+   "added": 1791671362880,
+   "noimg": true
+  },
+  {
+   "id": "gmv2yx3bsyr06c",
+   "title": "Guide for the Whisper and Whisper of the Worm",
+   "category": "Guide",
+   "notes": "Guide for the whisper exotic mission and the whisper of the worm exotic",
+   "link": "https://www.youtube.com/watch?v=UqDz-77oLDM",
+   "links": [
+    {
+     "url": "https://www.youtube.com/watch?v=UqDz-77oLDM",
+     "label": ""
+    }
+   ],
+   "keywords": [
+    "whisper of the worm"
+   ],
+   "added": 1791671445784,
+   "noimg": true
+  }
+ ]
+}
